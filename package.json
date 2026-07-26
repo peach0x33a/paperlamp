@@ -1,0 +1,21 @@
+{
+  "name": "mydesign",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Design system documented in the DESIGN.md format (google-labs-code/design.md)",
+  "scripts": {
+    "lint": "designmd lint DESIGN.md",
+    "build:tokens": "bun scripts/build-tokens.ts",
+    "site": "bun scripts/build-tokens.ts && bun scripts/serve.ts",
+    "diff": "designmd diff",
+    "export:tailwind": "designmd export --format json-tailwind DESIGN.md",
+    "export:css": "designmd export --format css-tailwind DESIGN.md",
+    "export:dtcg": "designmd export --format dtcg DESIGN.md",
+    "spec": "designmd spec --rules"
+  },
+  "devDependencies": {
+    "@google/design.md": "^0.3.0",
+    "yaml": "^2.9.0"
+  }
+}

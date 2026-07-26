@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>素墨 · 组件示例</title>
+  <!-- favicon 颜色复制自 colors.primary / colors.neutral（无法消费 CSS 变量） -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='4' fill='%232C2C2C'/%3E%3Ccircle cx='8' cy='8' r='3' fill='%23F7F7F8'/%3E%3C/svg%3E">
+  <script>
+    // 在首帧前应用主题，避免闪烁；校验规则与 main.js 一致。
+    (function () {
+      var v = null;
+      try { v = localStorage.getItem("quiet-ink-theme"); } catch (e) {}
+      var pref = v === "light" || v === "dark" ? v : "auto";
+      var dark = pref === "dark" ||
+        (pref === "auto" && matchMedia("(prefers-color-scheme: dark)").matches);
+      document.documentElement.classList.toggle("dark", dark);
+    })();
+  </script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.7.0/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/fira-code@5.2.5/index.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/fira-code@5.2.5/500.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/fira-code@5.2.5/700.css">
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+      <symbol id="i-monitor" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></symbol>
+      <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></symbol>
+      <symbol id="i-alert" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4M12 17h.01"/></symbol>
+      <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"/></symbol>
+      <symbol id="i-sparkles" viewBox="0 0 24 24"><path d="M9.94 15.5 8.5 14.06 2.37 12.48a.5.5 0 0 1 0-.96L8.5 9.94 10.08 3.8a.5.5 0 0 1 .96 0l1.58 6.14 6.14 1.58a.5.5 0 0 1 0 .96l-6.14 1.58-1.58 6.14a.5.5 0 0 1-.96 0Z"/><path d="M20 3v4M22 5h-4M4 17v2M5 18H3"/></symbol>
+      <symbol id="i-box" viewBox="0 0 24 24"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5M12 22V12"/></symbol>
+    </defs>
+  </svg>
+
+  <nav class="navbar">
+    <div class="brand title-md">
+      <svg class="icon" aria-hidden="true"><use href="#i-box"/></svg>
+      素墨<span class="latin">Quiet Ink</span>
+    </div>
+    <div class="theme-switch" role="radiogroup" aria-label="主题切换">
+      <button type="button" role="radio" data-theme="light"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-sun"/></svg>浅色</button>
+      <button type="button" role="radio" data-theme="dark"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-moon"/></svg>深色</button>
+      <button type="button" role="radio" data-theme="auto"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-monitor"/></svg>自动</button>
+    </div>
+  </nav>
+
+  <main>
+    <header class="hero">
+      <h1 class="headline-lg">欢迎来到素墨，<br>这是它的全部视觉元素。</h1>
+      <p class="body-md">
+        本页逐一陈列「素墨 / Quiet Ink」设计系统的元素（服务于幻觉产物 / AI Toybox）。
+        颜色、字体、间距、圆角、阴影与动效均来自
+        <code class="meta-label">DESIGN.md</code> 的 token，经
+        <code class="meta-label">bun run build:tokens</code> 编译为 CSS 变量。
+        切换右上角主题可以看到同一层级结构在两种纸面上的映射。
+      </p>
+    </header>
+
+    <section class="demo" id="colors">
+      <h2 class="headline-md">色彩</h2>
+      <p class="section-note">中性为骨架；indigo 管交互，星金管评分，琥珀管精选，橙管警告，红只出现两次。色值随主题实时读取。</p>
+      <div class="swatch-grid" id="swatch-grid"></div>
+    </section>
+
+    <section class="demo" id="typography">
+      <h2 class="headline-md">排版</h2>
+      <p class="section-note">正文与标题为霞鹜文楷屏幕版；元数据一律 Fira Code。层级靠字重，不靠字号膨胀。</p>
+      <div class="specimen">
+        <p class="headline-xl" data-specimen="headline-xl">观书有感</p>
+        <span class="specimen-meta"></span>
+      </div>
+      <div class="specimen">
+        <p class="headline-lg" data-specimen="headline-lg">半亩方塘一鉴开</p>
+        <span class="specimen-meta"></span>
+      </div>
+      <div class="specimen">
+        <p class="headline-md" data-specimen="headline-md">天光云影共徘徊</p>
+        <span class="specimen-meta"></span>
+      </div>
+      <div class="specimen">
+        <p class="title-md" data-specimen="title-md">问渠那得清如许</p>
+        <span class="specimen-meta"></span>
+      </div>
+      <div class="specimen">
+        <p class="body-md" data-specimen="body-md">为有源头活水来。正文行高从容，简介段落限宽约 42rem，不占满视口。</p>
+        <span class="specimen-meta"></span>
+      </div>
+      <div class="specimen">
+        <p class="body-sm" data-specimen="body-sm">辅助描述使用小号正文，仍然是文楷，仍然安静。</p>
+        <span class="specimen-meta"></span>
+      </div>
+      <div class="specimen">
+        <p class="label-md" data-specimen="label-md">label-md · #tokens · https://example.com</p>
+        <span class="specimen-meta"></span>
+      </div>
+      <div class="specimen">
+        <p class="label-sm" data-specimen="label-sm">label-sm · 2026-07-27 · a1b2c3d</p>
+        <span class="specimen-meta"></span>
+      </div>
+      <div class="specimen">
+        <p class="label-xs" data-specimen="label-xs">label-xs · 维护中 · 隐藏 · 精选</p>
+        <span class="specimen-meta"></span>
+      </div>
+    </section>
+
+    <section class="demo" id="spacing">
+      <h2 class="headline-md">间距与圆角</h2>
+      <p class="section-note">八档四分之一 rem 间距刻度；圆角双档工作制 —— 控件 4px、容器 8px，外加 Toast 专属 12px 与胶囊形。</p>
+      <div id="spacing-scale"></div>
+      <div class="demo-row" style="margin-top: var(--sp-6)">
+        <span class="radius-demo" style="border-radius: var(--radius-sm)">--radius-sm · 4px · 控件</span>
+        <span class="radius-demo" style="border-radius: var(--radius)">--radius · 8px · 容器</span>
+        <span class="radius-demo" style="border-radius: var(--radius-lg)">--radius-lg · 12px · Toast</span>
+        <span class="radius-demo" style="border-radius: var(--radius-full)">--radius-full · 胶囊</span>
+      </div>
+    </section>
+
+    <section class="demo" id="buttons">
+      <h2 class="headline-md">按钮</h2>
+      <p class="section-note">主按钮墨底纸字加粗体，hover 降至 90% 不透明度；次按钮描边换底；方括号文字按钮是本产品的签名式样。</p>
+      <div class="demo-row">
+        <button type="button" class="btn btn-primary">主要操作</button>
+        <button type="button" class="btn btn-secondary">次要操作</button>
+        <button type="button" class="btn btn-primary" disabled>禁用状态</button>
+        <button type="button" class="btn-text">[登录]</button>
+        <button type="button" class="btn-text accent">[评分]</button>
+      </div>
+    </section>
+
+    <section class="demo" id="cards">
+      <h2 class="headline-md">卡片</h2>
+      <p class="section-note">结构：标题行 → 两行描述 → 迷你标签 → 虚线分割 → 等宽页脚。Hover 是全系统唯一复合手势：indigo 描边 + 上浮 4px + shadow-xl。</p>
+      <div class="card-grid">
+        <article class="card">
+          <div class="card-head">
+            <h3>DESIGN.md</h3>
+            <span class="badge badge-featured"><svg class="icon icon-xs" aria-hidden="true"><use href="#i-sparkles"/></svg>精选</span>
+          </div>
+          <p class="desc">设计系统的唯一事实源：YAML frontmatter 存放 token，prose 说明设计意图，供 AI 编码工具直接读取。</p>
+          <div class="tags">
+            <span class="mini-tag">#tokens</span>
+            <span class="mini-tag">#prose</span>
+            <span class="mini-tag">#alpha</span>
+          </div>
+          <div class="card-foot">
+            <span>2026-07-27</span>
+            <span class="star-score"><svg class="icon icon-xs" aria-hidden="true"><use href="#i-star"/></svg><span class="score">4.8</span></span>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-head">
+            <h3>STYLE.md</h3>
+            <span class="badge badge-status">维护中</span>
+          </div>
+          <p class="desc">中文风格手册，与 DESIGN.md 值同步：色彩、排版、间距、组件规范、已知漂移与禁止事项。</p>
+          <div class="tags">
+            <span class="mini-tag">#中文</span>
+            <span class="mini-tag">#手册</span>
+          </div>
+          <div class="card-foot">
+            <span>2026-07-27</span>
+            <span class="star-score muted">暂无评分</span>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-head">
+            <h3>spec/spec.md</h3>
+          </div>
+          <p class="desc">Google 开源的 design.md 格式规范副本：token 模式、章节顺序、九条 lint 规则与消费方行为。</p>
+          <div class="tags">
+            <span class="mini-tag">#spec</span>
+            <span class="mini-tag">#apache-2.0</span>
+          </div>
+          <div class="card-foot">
+            <span>google-labs-code</span>
+            <span class="star-score"><svg class="icon icon-xs" aria-hidden="true"><use href="#i-star"/></svg><span class="score">5.0</span></span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="demo" id="chips">
+      <h2 class="headline-md">标签与徽章</h2>
+      <p class="section-note">药丸标签等宽、hover/激活硬反转，没有中间灰阶；徽章三式：维护中（muted 20%）、精选（琥珀墨）、[admin]（裸 indigo 文字）。</p>
+      <div class="demo-row">
+        <button type="button" class="tag-chip">#typography</button>
+        <button type="button" class="tag-chip active">#dark-mode</button>
+        <button type="button" class="tag-chip">#tokens</button>
+        <button type="button" class="tag-chip">#wcag-aa</button>
+        <span class="badge badge-status">维护中</span>
+        <span class="badge badge-featured"><svg class="icon icon-xs" aria-hidden="true"><use href="#i-sparkles"/></svg>精选</span>
+        <span class="badge-admin">[admin]</span>
+      </div>
+    </section>
+
+    <section class="demo" id="forms">
+      <h2 class="headline-md">表单</h2>
+      <p class="section-note">纸色井 + 细边框 + 4px 圆角，无内阴影；focus 边框转墨色，无光晕。标签在上，错误文字用红色。</p>
+      <form class="form-grid" onsubmit="return false">
+        <div class="field">
+          <label for="f-name">名称</label>
+          <input id="f-name" type="text" placeholder="例如：素墨">
+          <span class="help">用于展示的系统名称</span>
+        </div>
+        <div class="field invalid">
+          <label for="f-hex">主色</label>
+          <input id="f-hex" type="text" value="#000000" aria-invalid="true" aria-describedby="f-hex-err">
+          <span class="help" id="f-hex-err">不允许纯黑，请使用 #2C2C2C 一类的近黑</span>
+        </div>
+      </form>
+    </section>
+
+    <section class="demo" id="notices">
+      <h2 class="headline-md">面板与通知</h2>
+      <p class="section-note">内容面板 = 4px 左色条 + 浅纹底 + 仅右侧圆角；警告横幅共用一式；Toast 为墨底纸字反转药丸，顶部居中。</p>
+      <div style="display: grid; gap: var(--sp-4)">
+        <div class="notice-panel">
+          <div class="panel-title"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-sparkles"/></svg>AI 总结</div>
+          <span>这套系统以中性纸墨为骨架：indigo 只出现在交互态与 AI 面板，评分用星金，精选用琥珀，警告用橙，红色全站仅两处。</span>
+          <div class="panel-meta"><span>由 AI 自动生成，仅供参考</span><span>生成于 2026-07-27</span></div>
+        </div>
+        <div class="warning-banner" role="alert">
+          <svg class="icon icon-sm" aria-hidden="true"><use href="#i-alert"/></svg>
+          <div><strong>闪烁警告：</strong>本工具包含高频闪烁画面，光敏性癫痫患者请谨慎使用。</div>
+        </div>
+        <div class="demo-row">
+          <button type="button" class="btn btn-secondary" id="toast-btn">触发 Toast</button>
+          <button type="button" class="btn btn-secondary" id="modal-btn">打开弹窗</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo" id="table">
+      <h2 class="headline-md">榜单表格</h2>
+      <p class="section-note">表面色卡壳 + 纸色等宽表头 + 50% 细线分行；前三名用 emoji 奖牌，评分为五枚星金圆点。</p>
+      <div class="table-wrap">
+        <table class="quiet">
+          <thead>
+            <tr><th style="text-align:center">#</th><th>工具</th><th>评分</th><th>标签</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="rank">🥇</td>
+              <td><strong>DESIGN.md</strong></td>
+              <td><span class="rating-dots"><i class="lit"></i><i class="lit"></i><i class="lit"></i><i class="lit"></i><i class="lit"></i></span><span class="mono">4.8</span></td>
+              <td class="mono">#tokens</td>
+            </tr>
+            <tr>
+              <td class="rank">🥈</td>
+              <td><strong>STYLE.md</strong></td>
+              <td><span class="rating-dots"><i class="lit"></i><i class="lit"></i><i class="lit"></i><i class="lit"></i><i></i></span><span class="mono">4.2</span></td>
+              <td class="mono">#手册</td>
+            </tr>
+            <tr>
+              <td class="rank">🥉</td>
+              <td><strong>tokens.css</strong></td>
+              <td><span class="rating-dots"><i class="lit"></i><i class="lit"></i><i class="lit"></i><i></i><i></i></span><span class="mono">3.5</span></td>
+              <td class="mono">#generated</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span class="meta-label">© 2026 素墨 Quiet Ink · DESIGN.md (alpha) → tokens.css · LXGW WenKai Screen / Fira Code</span>
+  </footer>
+
+  <dialog class="modal" id="demo-modal" aria-labelledby="demo-modal-title">
+    <div class="modal-head">
+      <h3 id="demo-modal-title">弹窗标题</h3>
+      <button type="button" class="icon-btn" id="modal-close" aria-label="关闭">
+        <svg class="icon" aria-hidden="true"><use href="#i-x"/></svg>
+      </button>
+    </div>
+    <p class="body-sm muted" style="margin: 0 0 var(--sp-4)">
+      遮罩为纸色 80% + blur(4px)，面板 4px 圆角 + shadow-2xl，右上角 20px 关闭。
+      内部表单沿用纸色井规则。
+    </p>
+    <div class="field">
+      <label for="m-input">备注</label>
+      <input id="m-input" type="text" placeholder="表单控件在弹窗内使用纸色背景">
+    </div>
+    <div class="modal-actions">
+      <button type="button" class="btn btn-secondary" id="modal-cancel">取消</button>
+      <button type="button" class="btn btn-primary" id="modal-ok">确认</button>
+    </div>
+  </dialog>
+
+  <div id="toast-region" role="status" aria-live="polite"></div>
+
+  <script src="main.js"></script>
+</body>
+</html>
