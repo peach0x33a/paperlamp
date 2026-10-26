@@ -77,9 +77,9 @@ const type = [
 ] as const
 
 const radii = [
-  ["rounded-sm", "4px · 控件"],
-  ["rounded-md", "8px · 容器"],
-  ["rounded-lg", "12px · Toast"],
+  ["rounded-sm", "--radius × 0.5 · 控件"],
+  ["rounded-md", "--radius · 容器"],
+  ["rounded-lg", "--radius × 1.5 · Toast"],
   ["rounded-full", "药丸"],
 ] as const
 
@@ -154,6 +154,9 @@ const snippet = `:root {\n${lightVars}\n  /* … */\n}\n\n.dark {\n  --backgroun
         <h2 class="headline-md">
           圆角
         </h2>
+        <p class="mt-3 text-sm text-muted-foreground">
+          三档圆角都由 <code class="label-sm text-foreground">--radius</code>（默认 8px）推导，改一个变量即可整体调整。可以在<RouterLink to="/create" class="text-foreground underline underline-offset-4 hover:text-indigo">构建</RouterLink>页里预览。
+        </p>
         <div class="mt-4 grid grid-cols-2 gap-3">
           <div v-for="[cls, label] in radii" :key="cls" class="flex flex-col items-center gap-2 rounded-md border bg-card p-4">
             <div class="h-12 w-16 border-2 border-foreground bg-background" :class="cls" />

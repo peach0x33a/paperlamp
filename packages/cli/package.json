@@ -1,0 +1,31 @@
+{
+  "name": "paperlamp",
+  "version": "0.1.0",
+  "description": "纸灯 / Paperlamp CLI — copy Paperlamp Vue components into your project",
+  "type": "module",
+  "bin": {
+    "paperlamp": "dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=18.17"
+  },
+  "keywords": [
+    "vue",
+    "components",
+    "tailwindcss",
+    "reka-ui",
+    "design-system",
+    "cli"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/peach0x33a/paperlamp.git",
+    "directory": "packages/cli"
+  },
+  "scripts": {
+    "build": "bun build src/index.ts --target node --outfile dist/index.js"
+  }
+}

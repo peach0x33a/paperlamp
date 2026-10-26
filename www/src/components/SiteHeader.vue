@@ -6,7 +6,8 @@ import ThemeToggle from "./ThemeToggle.vue"
 const route = useRoute()
 const links = [
   { to: "/docs", label: "文档", match: (p: string) => p === "/docs" || p === "/docs/installation" || p === "/docs/theming" },
-  { to: "/docs/components/button", label: "组件", match: (p: string) => p.startsWith("/docs/components") },
+  { to: "/docs/components", label: "组件", match: (p: string) => p.startsWith("/docs/components") },
+  { to: "/create", label: "构建", match: (p: string) => p.startsWith("/create") },
 ]
 </script>
 

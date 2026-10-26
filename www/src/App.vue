@@ -1,15 +1,18 @@
 <script setup lang="ts">
+import { useRoute } from "vue-router"
 import { Toaster } from "@/components/ui/sonner"
 import SiteHeader from "./components/SiteHeader.vue"
+
+const route = useRoute()
 </script>
 
 <template>
   <div class="flex min-h-svh flex-col">
-    <SiteHeader />
+    <SiteHeader v-if="!route.meta.bare" />
     <RouterView v-slot="{ Component, route }">
       <component :is="Component" :key="route.matched[0]?.path" />
     </RouterView>
-    <footer class="mt-20 border-t border-dashed">
+    <footer v-if="!route.meta.bare && !route.meta.app" class="mt-20 border-t border-dashed">
       <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-2 px-4 py-6 label-sm text-muted-foreground">
         <span>纸灯 / Paperlamp · 设计 token 唯一事实源为 DESIGN.md</span>
         <span>Vue 3 · Reka UI · Tailwind CSS v4</span>

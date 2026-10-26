@@ -1,52 +1,46 @@
 <script setup lang="ts">
 import { computed } from "vue"
 import CodeBlock from "../components/CodeBlock.vue"
-import { registryBase, registryUrl } from "../docs/registry"
+import { addCommand, initCommand, registryBase } from "../docs/registry"
 
 const base = computed(registryBase)
 
 const steps = computed(() => [
   {
     title: "创建 Vue + Tailwind v4 项目",
-    body: "任意 Vite / Nuxt 项目均可，只要已接入 Tailwind CSS v4 并配置了 `@/*` 路径别名。",
+    body: "任意 Vite / Nuxt 项目均可，只要接入了 Tailwind CSS v4，并把 @ 路径别名指向 src。",
     code: "npm create vite@latest my-app -- --template vue-ts\ncd my-app\nnpm install tailwindcss @tailwindcss/vite",
     lang: "bash" as const,
   },
   {
-    title: "初始化 shadcn-vue",
-    body: "生成 components.json 与 cn() 工具函数。",
-    code: "npx shadcn-vue@latest init",
+    title: "初始化纸灯",
+    body: "写入主题 paperlamp.css、cn() 工具函数和 paperlamp.json，在主样式文件顶部补上所需的 @import，并安装字体等依赖。想先调好圆角，可以到「构建」页生成 preset 再带上 --preset。",
+    code: initCommand(),
     lang: "bash" as const,
-  },
-  {
-    title: "安装纸灯主题",
-    body: "paperlamp 主题条目会把亮暗两套 CSS 变量、字体与基础样式写入你的全局 CSS。",
-    code: `npx shadcn-vue@latest add ${registryUrl("paperlamp")}`,
-    lang: "bash" as const,
-  },
-  {
-    title: "（可选）注册为命名空间",
-    body: "在 components.json 中声明 registry 后，即可用 @paperlamp/<组件名> 简写。",
-    code: `{\n  "registries": {\n    "@paperlamp": "${base.value}/{name}.json"\n  }\n}`,
-    lang: "json" as const,
   },
   {
     title: "按需添加组件",
-    body: "组件源码会被复制到 components/ui/ 下，依赖（reka-ui、lucide-vue-next 等）自动安装。",
-    code: `npx shadcn-vue@latest add @paperlamp/button @paperlamp/tool-card\n# 或使用完整地址\nnpx shadcn-vue@latest add ${registryUrl("card")}`,
+    body: "组件源码会复制到 src/components/ui/ 下，它依赖的其他组件和 npm 包会一并安装。已存在的文件默认跳过，加 --overwrite 覆盖。",
+    code: `${addCommand(["button", "tool-card"])}\n# 查看全部组件\nnpx paperlamp@latest list`,
     lang: "bash" as const,
   },
 ])
 
-const fonts = `/* 字体：霞鹜文楷屏幕版 + Fira Code */
-@import "lxgw-wenkai-screen-webfont/lxgwwenkaiscreen.css";
-@import "@fontsource/fira-code/400.css";
-@import "@fontsource/fira-code/500.css";
-@import "@fontsource/fira-code/700.css";`
+const config = `{
+  "registry": "${base.value}",
+  "css": "src/style.css",
+  "radius": "8px",
+  "paths": { "ui": "src/components/ui", "lib": "src/lib" },
+  "aliases": { "ui": "@/components/ui", "lib": "@/lib" }
+}`
 
 const manual = `@import "tailwindcss";
 @import "tw-animate-css";
-@import "./paperlamp.css"; /* 来自 registry/styles/paperlamp.css */`
+@import "lxgw-wenkai-screen-webfont/lxgwwenkaiscreen.css";
+@import "@fontsource/fira-code/400.css";
+@import "@fontsource/fira-code/500.css";
+@import "@fontsource/fira-code/700.css";
+@import "./paperlamp.css";`
 </script>
 
 <template>
@@ -58,8 +52,8 @@ const manual = `@import "tailwindcss";
       安装
     </h1>
     <p class="mt-3 max-w-[42rem] text-muted-foreground">
-      纸灯以 shadcn 兼容的 registry 发布。本站即是 registry 服务器：每个组件对应
-      <code class="label-sm text-foreground">{{ base }}/&lt;name&gt;.json</code>。
+      纸灯用自己的命令行工具 <code class="label-sm text-foreground">paperlamp</code> 安装，组件源码直接复制进你的项目。
+      本站同时是 registry：每个组件对应 <code class="label-sm text-foreground">{{ base }}/&lt;name&gt;.json</code>。
     </p>
 
     <ol class="mt-10 flex flex-col gap-10">
@@ -78,15 +72,21 @@ const manual = `@import "tailwindcss";
     </ol>
 
     <h2 class="mt-14 headline-md">
+      paperlamp.json
+    </h2>
+    <p class="mt-3 mb-4 text-sm text-muted-foreground">
+      init 生成的配置。组件之间用 <code class="label-sm text-foreground">@/components/ui</code> 和 <code class="label-sm text-foreground">@/lib</code> 互相引用；
+      项目别名不同时改 aliases，CLI 会在复制时改写导入路径。
+    </p>
+    <CodeBlock :code="config" lang="json" file="paperlamp.json" />
+
+    <h2 class="mt-14 headline-md">
       手动接入
     </h2>
     <p class="mt-3 mb-4 text-sm text-muted-foreground">
-      不使用 CLI 时，把 <code class="label-sm text-foreground">registry/styles/paperlamp.css</code> 复制到项目中，并在全局 CSS 里按顺序引入：
+      不使用 CLI 时，把 <code class="label-sm text-foreground">registry/styles/paperlamp.css</code> 复制到项目中，安装
+      <code class="label-sm text-foreground">tw-animate-css</code>、<code class="label-sm text-foreground">lxgw-wenkai-screen-webfont</code>、<code class="label-sm text-foreground">@fontsource/fira-code</code>，再在主样式文件里按顺序引入：
     </p>
     <CodeBlock :code="manual" lang="css" file="src/style.css" />
-    <p class="mt-6 mb-4 text-sm text-muted-foreground">
-      字体通过 npm 安装 <code class="label-sm text-foreground">lxgw-wenkai-screen-webfont</code> 与 <code class="label-sm text-foreground">@fontsource/fira-code</code>：
-    </p>
-    <CodeBlock :code="fonts" lang="css" />
   </article>
 </template>

@@ -3,7 +3,7 @@ import { computed, ref, watchEffect } from "vue"
 import CodeBlock from "../components/CodeBlock.vue"
 import ComponentPreview from "../components/ComponentPreview.vue"
 import { bySlug, loadRegistrySources } from "../docs/catalog"
-import { registryUrl } from "../docs/registry"
+import { addCommand } from "../docs/registry"
 import { CATEGORIES } from "../docs/types"
 import NotFound from "./NotFound.vue"
 
@@ -13,7 +13,7 @@ const items = computed(() => entry.value?.registry ?? [props.slug])
 const category = computed(() => CATEGORIES.find(c => c.id === entry.value?.category)?.label)
 
 const install = ref<"cli" | "manual">("cli")
-const cli = computed(() => `npx shadcn-vue@latest add ${items.value.map(registryUrl).join(" ")}`)
+const cli = computed(() => addCommand(items.value))
 
 const sources = ref<{ file: string, code: string }[]>([])
 watchEffect(async () => {

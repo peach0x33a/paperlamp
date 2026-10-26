@@ -1,11 +1,11 @@
 {
-  "name": "paperlamp",
+  "name": "paperlamp-workspace",
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "纸灯 / Paperlamp — a shadcn-style Vue component library generated from DESIGN.md (google-labs-code/design.md)",
+  "description": "纸灯 / Paperlamp — a Vue 3 component library and docs site generated from DESIGN.md (google-labs-code/design.md)",
   "scripts": {
-    "dev": "bun run build:tokens && bun run build:registry && vite",
+    "dev": "bun run build:tokens && bun run build:registry && vite --host",
     "build": "bun run build:tokens && bun run build:registry && vue-tsc --noEmit && vite build",
     "preview": "vite preview",
     "typecheck": "vue-tsc --noEmit",
@@ -16,7 +16,8 @@
     "export:tailwind": "designmd export --format json-tailwind DESIGN.md",
     "export:css": "designmd export --format css-tailwind DESIGN.md",
     "export:dtcg": "designmd export --format dtcg DESIGN.md",
-    "spec": "designmd spec --rules"
+    "spec": "designmd spec --rules",
+    "build:cli": "cd packages/cli && bun run build"
   },
   "devDependencies": {
     "@google/design.md": "^0.3.0",

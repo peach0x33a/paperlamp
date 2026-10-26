@@ -1,12 +1,12 @@
 # 贡献指南 · 如何新增一个组件
 
-纸灯沿用 shadcn-vue 的架构：组件源码放在 `registry/ui/<name>/`，文档演示放在
+纸灯的组件源码放在 `registry/ui/<name>/`，文档演示放在
 `www/src/demos/<name>/`，两者都是**自动发现**的 —— 不需要编辑任何中央列表。
 
 ## 目录约定
 
 ```
-registry/ui/<name>/            # 会被 `shadcn-vue add` 原样拷进用户项目
+registry/ui/<name>/            # 会被 `paperlamp add` 原样拷进用户项目
   <Name>.vue                   # 每个子部件一个 SFC（DialogContent.vue、DialogTitle.vue…）
   index.ts                     # 导出所有部件 + cva 变体（如有）
 www/src/demos/<name>/

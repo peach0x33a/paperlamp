@@ -1,4 +1,4 @@
-// Compile DESIGN.md frontmatter tokens into the shadcn-style theme.
+// Compile DESIGN.md frontmatter tokens into the Paperlamp theme.
 // DESIGN.md is the single source of truth — never edit the generated files by hand.
 //
 // Outputs:
@@ -103,10 +103,17 @@ for (const name of Object.keys(light)) theme[`color-${name}`] = `var(--${name})`
 theme["font-sans"] = "var(--font-serif)";
 theme["font-serif"] = "var(--font-serif)";
 theme["font-mono"] = "var(--font-mono)";
-// Two working radius tiers + toast tier: controls 4px, containers 8px (--radius), toast 12px.
-theme["radius-sm"] = r.sm;
+// Two working radius tiers + toast tier, all derived from --radius so one variable retunes
+// the whole system (the /create builder edits it). Ratios come from DESIGN.md: 4 / 8 / 12px.
+const px = (v: string) => {
+  const m = String(v).match(/^([\d.]+)(px|rem)$/);
+  if (!m) throw new Error(`DESIGN.md rounded value "${v}" must be px or rem`);
+  return Number(m[1]) * (m[2] === "rem" ? 16 : 1);
+};
+const ratio = (v: string) => +(px(v) / px(r.md)).toFixed(4);
+theme["radius-sm"] = `calc(var(--radius) * ${ratio(r.sm)})`;
 theme["radius-md"] = "var(--radius)";
-theme["radius-lg"] = r.lg;
+theme["radius-lg"] = `calc(var(--radius) * ${ratio(r.lg)})`;
 for (const [k, v] of Object.entries<string>(fm.shadow)) theme[`shadow-${k}`] = v;
 theme["container-content"] = fm.spacing.container;
 theme["ease-quiet"] = fm.motion.easing;

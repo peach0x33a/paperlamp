@@ -66,7 +66,7 @@ import { entries } from "../docs/catalog"
       <RouterLink to="/docs/installation" :class="buttonVariants()">
         开始安装
       </RouterLink>
-      <RouterLink to="/docs/components/button" :class="buttonVariants({ variant: 'outline' })">
+      <RouterLink to="/docs/components" :class="buttonVariants({ variant: 'outline' })">
         浏览 {{ entries.length }} 个组件
       </RouterLink>
     </div>

@@ -43,7 +43,7 @@ async function copy() {
       <Copy v-else class="size-3.5" />
     </button>
     <div
-      class="overflow-auto p-4 font-mono text-[0.8125rem] leading-relaxed [&_pre]:outline-none"
+      class="overflow-auto p-4 pr-11 font-mono text-[0.8125rem] leading-relaxed [&_pre]:outline-none"
       :style="maxHeight ? { maxHeight } : undefined"
     >
       <div v-if="html" v-html="html" />

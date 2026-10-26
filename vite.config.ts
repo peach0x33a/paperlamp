@@ -5,7 +5,7 @@ import { defineConfig } from "vite";
 
 // The docs app lives in www/; the component library lives in registry/.
 // `@/components/ui` and `@/lib` resolve into registry/ so every component file is
-// written exactly as it will look after `shadcn-vue add` copies it into a project.
+// written exactly as it will look after `paperlamp add` copies it into a project.
 export default defineConfig({
   root: fileURLToPath(new URL("./www", import.meta.url)),
   plugins: [vue(), tailwindcss()],
