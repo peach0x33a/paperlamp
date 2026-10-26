@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "description": "纸灯 / Paperlamp — a Vue 3 component library and docs site generated from DESIGN.md (google-labs-code/design.md)",
+  "license": "MIT",
   "scripts": {
     "dev": "bun run build:tokens && bun run build:registry && vite --host",
     "build": "bun run build:tokens && bun run build:registry && vue-tsc --noEmit && vite build",
