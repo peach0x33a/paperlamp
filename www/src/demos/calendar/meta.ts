@@ -12,5 +12,6 @@ export default defineMeta({
   notes: [
     "今天以下划线标出；选中日期使用 bg-primary 墨色底，不再加描边。",
     "不在当前月份的日期降到 50% 不透明度，仍可点击切换月份。",
+    "选一段时间用 Range Calendar（range-calendar）；要放进输入框、点开才出现的，见 Date Picker。",
   ],
 });

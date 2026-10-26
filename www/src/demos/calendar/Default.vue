@@ -15,7 +15,7 @@ const summary = computed(() => {
 </script>
 
 <template>
-  <div class="grid w-full max-w-sm gap-3">
+  <div class="grid w-fit gap-3">
     <Calendar
       v-model="releaseDate"
       locale="zh-CN"

@@ -9,7 +9,7 @@ const isDateUnavailable = (date: DateValue) => isWeekend(date, "zh-CN")
 </script>
 
 <template>
-  <div class="w-full max-w-sm">
+  <div class="w-fit">
     <Calendar
       v-model="releaseDate"
       locale="zh-CN"
