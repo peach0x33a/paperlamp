@@ -48,13 +48,13 @@ useEventListener(window, "keydown", (event: KeyboardEvent) => {
       <CommandList>
         <CommandEmpty>没有找到匹配的工具、标签或命令。</CommandEmpty>
         <CommandGroup heading="工具">
-          <CommandItem value="便签墙" @select="open = false">
+          <CommandItem value="草稿墙" @select="open = false">
             <Wrench />
-            便签墙
+            草稿墙
           </CommandItem>
-          <CommandItem value="色块调色盘" @select="open = false">
+          <CommandItem value="配色盘" @select="open = false">
             <Wrench />
-            色块调色盘
+            配色盘
           </CommandItem>
         </CommandGroup>
         <CommandGroup heading="标签">

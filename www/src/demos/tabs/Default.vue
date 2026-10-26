@@ -16,14 +16,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
       </TabsTrigger>
     </TabsList>
     <TabsContent value="intro" class="body-md">
-      <p>像素小镇生成器：一句话生成一座有居民的小镇。居民每天都会回家睡觉。</p>
+      <p>用一句话生成一座像素小镇。</p>
     </TabsContent>
     <TabsContent value="comments" class="body-md">
-      <p class="text-muted-foreground">评论区还没有人发言，来当第一个吧。</p>
+      <p class="text-muted-foreground">还没有评论。</p>
     </TabsContent>
     <TabsContent value="changelog" class="body-md">
       <ol class="grid gap-2 body-sm">
-        <li>2026-10-18 新增「居民作息」：晚上会回家睡觉。</li>
+        <li>2026-10-18 新增「作息提醒」：每晚自动提醒。</li>
         <li>2026-08-27 首次上线。</li>
       </ol>
     </TabsContent>

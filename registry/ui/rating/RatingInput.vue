@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils"
 
 const props = withDefaults(defineProps<{
   max?: number
-  /** Optional tier names, one per star (e.g. 拉 / NPC / 人上人 / 顶级 / 夯). */
+  /** Optional tier names, one per star (e.g. 很差 / 较差 / 一般 / 不错 / 很好). */
   labels?: string[]
   name?: string
   required?: boolean

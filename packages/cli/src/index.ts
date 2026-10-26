@@ -43,15 +43,15 @@ interface Config {
 const CONFIG_FILE = "paperlamp.json";
 /** The public docs site; --registry or PAPERLAMP_REGISTRY point elsewhere (forks, local dev). */
 const DEFAULT_REGISTRY = "https://peach0x33a.github.io/paperlamp/r";
+// Same order and labels as the docs sidebar (www/src/docs/types.ts).
 const CATEGORY_LABELS: Record<string, string> = {
   general: "通用",
-  form: "表单",
   layout: "布局",
-  overlay: "浮层",
-  feedback: "反馈",
   navigation: "导航",
+  form: "数据录入",
   data: "数据展示",
-  signature: "纸灯特色",
+  feedback: "反馈",
+  other: "其他",
 };
 
 // ---------- tiny output helpers
@@ -347,7 +347,9 @@ async function list(cwd: string, flags: Args["flags"]) {
     const k = i.category ?? "other";
     groups.set(k, [...(groups.get(k) ?? []), i]);
   }
-  for (const [cat, group] of groups) {
+  const order = Object.keys(CATEGORY_LABELS);
+  const rank = (k: string) => (order.includes(k) ? order.indexOf(k) : order.length);
+  for (const [cat, group] of [...groups].sort(([a], [b]) => rank(a) - rank(b))) {
     console.log(bold(CATEGORY_LABELS[cat] ?? "其他"));
     for (const i of group) console.log(`  ${i.name.padEnd(16)}${dim(i.title)}`);
   }

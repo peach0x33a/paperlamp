@@ -13,7 +13,7 @@ import {
 const steps = [
   { step: 1, title: "填写信息", description: "名称、链接与简介" },
   { step: 2, title: "上传截图", description: "至少一张" },
-  { step: 3, title: "等待审核", description: "审核通过后出现在展厅" },
+  { step: 3, title: "等待审核", description: "审核通过后公开展示" },
 ]
 
 const current = ref(2)

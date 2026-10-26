@@ -26,7 +26,7 @@ function promise() {
       错误
     </Button>
     <Button variant="outline" @click="promise">
-      Promise
+      异步操作
     </Button>
   </div>
 </template>

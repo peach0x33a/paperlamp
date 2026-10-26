@@ -1,11 +1,10 @@
 # 纸灯 / Paperlamp
 
-「纸灯 / Paperlamp」是一套 **复制即拥有的 Vue 3 组件库**，服务于「幻觉产物 / AI Toybox」应用。
-设计以文本为先、以留白和边框建立秩序，亮暗双主题共享同一层级结构。
+「纸灯 / Paperlamp」是一套 Vue 3 组件库，面向以中文内容为主的站点。
+层级靠字重、留白和细边框，亮色与暗色共用同一组变量名。
 
-它不是一个组件 npm 包，而是一个 **registry** 加一个命令行工具 `paperlamp`：组件源码通过
-`npx paperlamp add <组件>` 拷进你的项目，归你所有、随你修改。所有视觉 token 的唯一事实源是
-根目录的 `DESIGN.md`（Google [design.md 格式](https://github.com/google-labs-code/design.md)）。
+组件通过 **registry** 和命令行工具 `paperlamp` 分发：`npx paperlamp add <组件>` 把源码复制进你的项目，
+之后可以直接修改。视觉 token 定义在根目录的 `DESIGN.md`（Google [design.md 格式](https://github.com/google-labs-code/design.md)）。
 
 技术栈：Vue 3 · [Reka UI](https://reka-ui.com)（无头原语）· Tailwind CSS v4 ·
 class-variance-authority · lucide-vue-next · vue-sonner。

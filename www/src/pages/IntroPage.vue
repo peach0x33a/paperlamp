@@ -13,14 +13,12 @@ import { entries } from "../docs/catalog"
     </h1>
     <div class="mt-4 flex max-w-[42rem] flex-col gap-4 leading-relaxed">
       <p>
-        纸灯 / Paperlamp 是一套<strong>可复制的 Vue 组件</strong>，而不是一个 npm 依赖包。
-        它沿用 shadcn 的思路：组件源码通过命令行拷进你的项目，归你所有、随你修改。
+        纸灯 / Paperlamp 是一套 Vue 3 组件。和 shadcn 一样，组件源码通过命令行复制进你的项目，之后可以直接修改。
       </p>
       <p class="text-muted-foreground">
-        每个组件由 Reka UI 无头原语提供可访问性与交互行为，Tailwind CSS v4 负责样式，
-        <code class="label-sm text-foreground">class-variance-authority</code> 管理变体。
-        所有颜色、字体、圆角、阴影与动效都来自仓库根目录的 <code class="label-sm text-foreground">DESIGN.md</code>，
-        由 <code class="label-sm text-foreground">bun run build:tokens</code> 编译为 CSS 变量，亮暗两套主题共享同一层级结构。
+        交互与可访问性来自 Reka UI，样式用 Tailwind CSS v4，变体用 <code class="label-sm text-foreground">class-variance-authority</code>。
+        颜色、字体、圆角、阴影与动效定义在仓库根目录的 <code class="label-sm text-foreground">DESIGN.md</code> 里，
+        由 <code class="label-sm text-foreground">bun run build:tokens</code> 编译成 CSS 变量。
       </p>
     </div>
 
@@ -33,31 +31,31 @@ import { entries } from "../docs/catalog"
           文本先行
         </p>
         <p class="mt-1 text-sm text-muted-foreground">
-          靠字重、留白与细边框建立层级，而不是饱和色块或重阴影。
+          层级靠字重、留白和细边框，少用色块与阴影。
         </p>
       </li>
       <li class="rounded-md border bg-card p-6">
         <p class="title-md">
-          颜色各司其职
+          颜色按用途分配
         </p>
         <p class="mt-1 text-sm text-muted-foreground">
-          墨色管主操作，indigo 管交互，星金管评分，琥珀管精选，橙管警告，红只用于文字。
+          墨色用于主操作，indigo 用于交互强调，橙色用于警告，红色只用于错误文字。
         </p>
       </li>
       <li class="rounded-md border bg-card p-6">
         <p class="title-md">
-          双档圆角
+          两档圆角
         </p>
         <p class="mt-1 text-sm text-muted-foreground">
-          控件 4px、容器 8px，Toast 专属 12px，药丸为全圆角。
+          控件 4px，容器 8px，全局提示 12px，胶囊为全圆角。
         </p>
       </li>
       <li class="rounded-md border bg-card p-6">
         <p class="title-md">
-          暗色同构
+          暗色只换变量
         </p>
         <p class="mt-1 text-sm text-muted-foreground">
-          <code class="label-sm">html.dark</code> 切换共享变量，组件内不写任何暗色分支。
+          <code class="label-sm">html.dark</code> 切换一组变量，组件里基本不写 <code class="label-sm">dark:</code> 样式（浏览器外壳的画布除外）。
         </p>
       </li>
     </ul>

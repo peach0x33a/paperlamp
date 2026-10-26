@@ -14,14 +14,14 @@ const steps = computed(() => [
   },
   {
     title: "初始化纸灯",
-    body: "写入主题 paperlamp.css、cn() 工具函数和 paperlamp.json，在主样式文件顶部补上所需的 @import，并安装字体等依赖。想先调好圆角，可以到「构建」页生成 preset 再带上 --preset。",
+    body: "写入主题 paperlamp.css、cn() 工具函数和 paperlamp.json，在主样式文件顶部补上所需的 @import，并安装字体等依赖。在「构建」页调好主题后，加上 --preset 使用。",
     code: initCommand(),
     lang: "bash" as const,
   },
   {
     title: "按需添加组件",
     body: "组件源码会复制到 src/components/ui/ 下，它依赖的其他组件和 npm 包会一并安装。已存在的文件默认跳过，加 --overwrite 覆盖。",
-    code: `${addCommand(["button", "tool-card"])}\n# 查看全部组件\nnpx paperlamp@latest list`,
+    code: `${addCommand(["button", "card"])}\n# 查看全部组件\nnpx paperlamp@latest list`,
     lang: "bash" as const,
   },
 ])

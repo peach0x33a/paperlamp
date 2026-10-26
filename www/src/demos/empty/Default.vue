@@ -10,7 +10,7 @@ import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/
         <Ghost />
       </EmptyMedia>
       <EmptyTitle>这个标签下还没有工具</EmptyTitle>
-      <EmptyDescription>换一个标签看看，或者等下一批幻觉产物上架。</EmptyDescription>
+      <EmptyDescription>换一个标签看看，或稍后再来。</EmptyDescription>
     </EmptyHeader>
   </Empty>
 </template>

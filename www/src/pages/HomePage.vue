@@ -3,26 +3,24 @@ import type { Component } from "vue"
 import { ArrowRight } from "lucide-vue-next"
 import { buttonVariants } from "@/components/ui/button"
 import CodeBlock from "../components/CodeBlock.vue"
-import CalendarDemo from "../demos/calendar/Default.vue"
+import CommandDemo from "../demos/command/Default.vue"
 import ChartDemo from "../demos/chart/Distribution.vue"
 import FieldDemo from "../demos/field/Default.vue"
-import NoticePanelDemo from "../demos/notice-panel/Default.vue"
+import RangeCalendarDemo from "../demos/range-calendar/Default.vue"
 import RatingDemo from "../demos/rating/Input.vue"
 import StepperDemo from "../demos/stepper/Default.vue"
 import TagsInputDemo from "../demos/tags-input/Default.vue"
-import ToolCardDemo from "../demos/tool-card/Default.vue"
 import { entries } from "../docs/catalog"
 import { addCommand } from "../docs/registry"
 
 // Live demos from the docs, in three hand-balanced columns. Each tile links to its page.
 const showcase: { slug: string, demo: Component }[][] = [
   [
-    { slug: "tool-card", demo: ToolCardDemo },
+    { slug: "command", demo: CommandDemo },
     { slug: "stepper", demo: StepperDemo },
-    { slug: "notice-panel", demo: NoticePanelDemo },
   ],
   [
-    { slug: "calendar", demo: CalendarDemo },
+    { slug: "range-calendar", demo: RangeCalendarDemo },
     { slug: "chart", demo: ChartDemo },
     { slug: "tags-input", demo: TagsInputDemo },
   ],
@@ -34,10 +32,10 @@ const showcase: { slug: string, demo: Component }[][] = [
 const titleOf = (slug: string) => entries.find((e) => e.slug === slug)
 
 const principles = [
-  { title: "源码归你", body: "组件通过命令行拷进项目，不是 npm 依赖。要改样式、改行为，直接改文件。" },
-  { title: "文本先行", body: "靠字重、留白与细边框建立层级，不靠饱和色块和重阴影。" },
-  { title: "一份 DESIGN.md", body: "颜色、字体、圆角、动效都写在 DESIGN.md 里，编译成 CSS 变量，亮暗两套共用。" },
-  { title: "可访问", body: "交互与键盘行为来自 Reka UI 无头原语，焦点环和对比度按 WCAG 校验。" },
+  { title: "源码在你的项目里", body: "组件通过命令行复制进项目，样式和行为都可以直接改。" },
+  { title: "文本先行", body: "层级靠字重、留白和细边框，少用色块与阴影。" },
+  { title: "一份 DESIGN.md", body: "颜色、字体、圆角和动效都定义在 DESIGN.md 里，编译成 CSS 变量。" },
+  { title: "键盘与读屏可用", body: "交互基于 Reka UI，焦点环和文字对比度按 WCAG AA 检查。" },
 ]
 </script>
 
@@ -51,11 +49,11 @@ const principles = [
         {{ entries.length }} 个组件 · Vue 3 · Reka UI · Tailwind CSS v4
         <ArrowRight class="size-3.5" />
       </RouterLink>
-      <h1 class="mt-6 max-w-3xl headline-xl sm:text-5xl sm:leading-tight">
-        安静、以文字为先的 Vue 组件
+      <h1 class="mt-6 headline-xl sm:text-6xl sm:leading-tight">
+        纸灯
       </h1>
-      <p class="mt-5 max-w-[36rem] text-lg leading-relaxed text-muted-foreground">
-        纸灯 / Paperlamp 是一套可复制的组件和设计系统。墨色正文、纸面底色、一抹 indigo，适合做内容为主的中文站点。
+      <p class="mt-4 text-lg text-muted-foreground">
+        一套安静的 Vue 3 组件
       </p>
       <div class="mt-8 flex flex-wrap justify-center gap-3">
         <RouterLink to="/docs/installation" :class="buttonVariants({ size: 'lg' })">

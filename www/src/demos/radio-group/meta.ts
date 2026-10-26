@@ -1,9 +1,9 @@
 import { defineMeta } from "@docs/docs/types";
 
 export default defineMeta({
-  title: "RadioGroup",
+  title: "Radio Group",
   zh: "单选框组",
-  description: "在一组互斥选项中选择一个。选中项为墨色圆点，适合选项少且需要一眼看全的场景。",
+  description: "在互斥选项中选择一个。选项较少、需要一眼看全时使用。",
   category: "form",
   examples: [
     { name: "Default", title: "基础用法" },

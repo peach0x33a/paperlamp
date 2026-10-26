@@ -30,7 +30,7 @@ const pending = ["帧间去抖", "猫咪文字生成器", "雨声合成台"]
       <Sidebar contained>
         <SidebarHeader>
           <div class="flex items-center gap-2 px-2 py-1.5">
-            <span class="headline-md leading-none">幻觉产物</span>
+            <span class="headline-md leading-none">Acme</span>
             <span class="font-mono label-xs text-muted-foreground">admin</span>
           </div>
         </SidebarHeader>
@@ -73,9 +73,9 @@ const pending = ["帧间去抖", "猫咪文字生成器", "雨声合成台"]
                   <SidebarMenuBadge>{{ pending.length }}</SidebarMenuBadge>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
-                  <SidebarMenuButton tooltip="隐藏的工具">
+                  <SidebarMenuButton tooltip="已隐藏内容">
                     <EyeOff />
-                    <span>隐藏的工具</span>
+                    <span>已隐藏内容</span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               </SidebarMenu>
@@ -88,7 +88,7 @@ const pending = ["帧间去抖", "猫咪文字生成器", "雨声合成台"]
               <AvatarFallback>墨</AvatarFallback>
             </Avatar>
             <div class="flex min-w-0 flex-col">
-              <span class="text-sm font-bold">小墨</span>
+              <span class="text-sm font-bold">用户</span>
               <span class="font-mono label-xs text-muted-foreground">管理员</span>
             </div>
           </div>
@@ -105,9 +105,9 @@ const pending = ["帧间去抖", "猫咪文字生成器", "雨声合成台"]
           <ul v-if="pending.length" class="space-y-1 body-sm">
             <li v-for="name in pending" :key="name">{{ name }}</li>
           </ul>
-          <p v-else class="body-sm text-muted-foreground">没有待审核的工具，今天可以歇一歇。</p>
+          <p v-else class="body-sm text-muted-foreground">没有待审核的内容。</p>
           <div class="mt-auto">
-            <Button variant="outline" size="sm">查看全部待审核</Button>
+            <Button variant="outline" size="sm">查看待审核列表</Button>
           </div>
         </div>
       </SidebarInset>

@@ -13,7 +13,7 @@ import {
         <div class="flex h-full flex-col gap-2 p-4">
           <h3 class="title-md">工具说明</h3>
           <p class="body-sm text-muted-foreground">
-            这是一个会把文字变成小诗的玩具。输入一句话，它会换个语气再说一遍。
+            输入一句话，按所选语气改写一遍。
           </p>
         </div>
       </ResizablePanel>

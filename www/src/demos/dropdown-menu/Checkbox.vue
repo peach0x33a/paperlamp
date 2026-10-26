@@ -31,7 +31,7 @@ const layout = ref("grid")
         显示封面
       </DropdownMenuCheckboxItem>
       <DropdownMenuCheckboxItem v-model="showMaintenance">
-        显示维护中的工具
+        显示已下架的内容
       </DropdownMenuCheckboxItem>
       <DropdownMenuSeparator />
       <DropdownMenuLabel>排列方式</DropdownMenuLabel>

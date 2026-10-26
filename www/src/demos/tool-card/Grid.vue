@@ -13,8 +13,8 @@ import {
 } from "@/components/ui/tool-card"
 
 const tools = [
-  { title: "猫名字典", desc: "给它一张猫的照片，它给你二十个名字。", tags: ["图像", "整活"], date: "2026-10-12", score: 4.5 },
-  { title: "会议废话检测", desc: "上传会议录音，标出每一句没有信息量的话，并给出一个废话浓度。结果仅供娱乐，别发给老板。", tags: ["音频", "效率"], date: "2026-09-30", score: 4.1, maintenance: true },
+  { title: "猫名字典", desc: "给它一张猫的照片，它给你二十个名字。", tags: ["图像", "娱乐"], date: "2026-10-12", score: 4.5 },
+  { title: "会议废话检测", desc: "上传会议录音，标出没有信息量的句子，并给出废话占比。", tags: ["音频", "效率"], date: "2026-09-30", score: 4.1, maintenance: true },
   { title: "古诗接龙", desc: "你出一句，它接一句，接不上就认输。", tags: ["文字", "学习"], date: "2026-09-21", score: null },
 ]
 </script>

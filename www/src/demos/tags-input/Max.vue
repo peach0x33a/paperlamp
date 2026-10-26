@@ -21,7 +21,7 @@ const remaining = computed(() => 3 - tags.value.length)
         <TagsInputItemText>{{ item }}</TagsInputItemText>
         <TagsInputItemDelete :aria-label="`移除标签 ${item}`" />
       </TagsInputItem>
-      <TagsInputInput :placeholder="remaining > 0 ? `还能加 ${remaining} 个` : '已经满了'" />
+      <TagsInputInput :placeholder="remaining > 0 ? `还能加 ${remaining} 个` : '已达上限'" />
     </TagsInput>
     <p class="body-sm text-muted-foreground">已满时输入框不再接受新标签，删除一个即可继续添加。</p>
   </div>

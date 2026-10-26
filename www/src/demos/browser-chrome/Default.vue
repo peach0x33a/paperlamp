@@ -16,7 +16,7 @@ import {
   <BrowserChrome class="w-full max-w-2xl">
     <BrowserChromeHeader>
       <BrowserChromeTrafficLights />
-      <BrowserChromeAddressBar url="toybox.example/t/pixel-town" />
+      <BrowserChromeAddressBar url="example.com/tools/pixel-town" />
       <BrowserChromeStatus>beta</BrowserChromeStatus>
       <BrowserChromeActions>
         <BrowserChromeAction aria-label="重新加载">

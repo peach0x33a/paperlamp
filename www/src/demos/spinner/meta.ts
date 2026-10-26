@@ -2,8 +2,8 @@ import { defineMeta } from "@docs/docs/types";
 
 export default defineMeta({
   title: "Spinner",
-  zh: "加载指示",
-  description: "一个旋转的 LoaderCircle，继承当前文字色，带 role=status 与「加载中」读屏标签。",
+  zh: "加载中",
+  description: "旋转的 LoaderCircle 图标，继承当前文字色，带 role=status 与「加载中」读屏标签。",
   category: "feedback",
   examples: [
     { name: "Default", title: "基础用法" },

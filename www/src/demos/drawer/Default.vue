@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/drawer"
 import { RatingInput } from "@/components/ui/rating"
 
-const tiers = ["拉", "NPC", "人上人", "顶级", "夯"]
+const tiers = ["很差", "一般", "还行", "推荐", "必玩"]
 const draft = ref<number>()
 const saved = ref<number>()
 const open = ref(false)
@@ -41,7 +41,7 @@ function submit() {
           <div class="mx-auto w-full max-w-md">
             <DrawerHeader>
               <DrawerTitle>给这个工具评分</DrawerTitle>
-              <DrawerDescription>「猫名字典」适合你的时候再打分，随时可以改。</DrawerDescription>
+              <DrawerDescription>评分可以随时修改。</DrawerDescription>
             </DrawerHeader>
             <div class="px-4 pb-2">
               <RatingInput v-model="draft" :labels="tiers" aria-label="给这个工具评分" />

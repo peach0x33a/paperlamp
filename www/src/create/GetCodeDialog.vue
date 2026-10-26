@@ -19,7 +19,7 @@ const css = computed(() => presetCss(preset.value) || "/* 默认 preset，paperl
         用这个 preset 初始化
       </h3>
       <p class="body-sm text-muted-foreground">
-        新项目直接运行；已经装过纸灯的项目再运行一次 init，只会按 preset 重写主题文件，组件不受影响。
+        新项目直接运行。已安装纸灯的项目再运行一次 init，会按 preset 重写 paperlamp.css，已有组件不会被覆盖。
       </p>
       <CodeBlock :code="fresh" lang="bash" />
     </section>
@@ -28,7 +28,7 @@ const css = computed(() => presetCss(preset.value) || "/* 默认 preset，paperl
         只改 CSS 变量
       </h3>
       <p class="body-sm text-muted-foreground">
-        已经装过纸灯的项目，也可以把下面这些变量覆盖到 paperlamp.css 里对应的 :root 与 .dark 中。
+        也可以手动把下面的变量改进 paperlamp.css 的 :root 与 .dark 里。
       </p>
       <CodeBlock :code="css" lang="css" file="paperlamp.css" />
     </section>

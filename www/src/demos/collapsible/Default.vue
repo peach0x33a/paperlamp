@@ -9,7 +9,7 @@ const open = ref(false)
 <template>
   <Collapsible v-model:open="open" class="w-full max-w-sm space-y-2">
     <div class="flex items-center justify-between gap-4">
-      <p class="title-md">标签：文字 · 整活</p>
+      <p class="title-md">标签：文字</p>
       <CollapsibleTrigger as-child>
         <Button variant="bracket">{{ open ? "收起" : "展开" }}</Button>
       </CollapsibleTrigger>

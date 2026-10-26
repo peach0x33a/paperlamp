@@ -15,7 +15,7 @@ import {
 const updates = [
   { name: "图谱", initial: "图", text: "新增了按标签筛选的视图，链接已更新。" },
   { name: "小墨", initial: "墨", text: "修复了深色模式下评论框的边框颜色。" },
-  { name: "纸鹤", initial: "鹤", text: "维护说明已写入工具页，有需要的话可以看看。" },
+  { name: "纸鹤", initial: "鹤", text: "维护说明已更新到工具页。" },
 ]
 </script>
 

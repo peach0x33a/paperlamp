@@ -9,7 +9,7 @@ const formatter = new DateFormatter("zh-CN", { dateStyle: "long" })
 const isDateUnavailable = (date: DateValue) => isWeekend(date, "zh-CN")
 
 const summary = computed(() => {
-  if (!releaseDate.value) return "还没选日期，从工作日里挑一个。"
+  if (!releaseDate.value) return "未选择日期。"
   return `上架日期：${formatter.format(releaseDate.value.toDate(getLocalTimeZone()))}`
 })
 </script>

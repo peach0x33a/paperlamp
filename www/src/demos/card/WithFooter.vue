@@ -16,7 +16,7 @@ import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader,
       <p class="body-sm text-muted-foreground">上次更新 2026-10-12</p>
     </CardContent>
     <CardFooter variant="dashed">
-      <span>文字 · 整活</span>
+      <span>文字 · 生成</span>
       <span>4.5</span>
     </CardFooter>
   </Card>

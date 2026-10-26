@@ -17,7 +17,7 @@ const doc = `<meta name="color-scheme" content="light dark"><body style="margin:
   <BrowserChrome class="w-full max-w-2xl">
     <BrowserChromeHeader>
       <BrowserChromeTrafficLights />
-      <BrowserChromeAddressBar url="toybox.example/t/hello-iframe" />
+      <BrowserChromeAddressBar url="example.com/tools/hello-iframe" />
       <BrowserChromeActions>
         <BrowserChromeAction as-child>
           <a href="#" aria-label="在新标签页打开">

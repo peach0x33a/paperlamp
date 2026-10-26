@@ -39,7 +39,7 @@ function toggleTag(tag: string, checked: boolean | "indeterminate") {
     <FieldGroup>
       <FieldSet>
         <FieldLegend>提交工具</FieldLegend>
-        <FieldDescription>填好基本信息，审核通过后会出现在展厅里。</FieldDescription>
+        <FieldDescription>填写基本信息，提交后进入审核。</FieldDescription>
         <FieldGroup>
           <Field>
             <FieldLabel for="tool-name">名称</FieldLabel>

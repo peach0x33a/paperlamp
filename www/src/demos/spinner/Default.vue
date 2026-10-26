@@ -4,6 +4,6 @@ import { Spinner } from "@/components/ui/spinner"
 
 <template>
   <div class="flex items-center gap-2 body-sm text-muted-foreground">
-    <Spinner /> AI 正在读评论…
+    <Spinner /> 正在加载工具列表…
   </div>
 </template>

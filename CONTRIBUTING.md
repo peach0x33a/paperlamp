@@ -67,8 +67,8 @@ const forwarded = useForwardPropsEmits(delegated, emits)
 
 ## 演示文案
 
-- 中文、直接、平静、略带玩心；场景取自「幻觉产物 / AI Toybox」：工具卡、标签、评分、
-  AI 总结、评论、维护状态、内容警告等。
+- 中文、直接、平静；场景用通用的内容站或后台：文章、项目、成员、订单、设置等，
+  不绑定某个具体产品。
 - 不写 "Lorem ipsum"、"Scroll to explore" 之类套话，不编造统计数字。
 
 ## meta.ts
@@ -80,7 +80,7 @@ export default defineMeta({
   title: "Dialog",
   zh: "对话框",
   description: "一句话说明用途。",
-  category: "overlay", // general | form | layout | overlay | feedback | navigation | data | signature
+  category: "feedback", // general | layout | navigation | form | data | feedback | other（按 Ant Design 分类）
   examples: [{ name: "Default", title: "基础用法" }, { name: "Form", title: "表单", description: "…" }],
   notes: ["可选：设计约束说明。"],
 });

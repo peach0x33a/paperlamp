@@ -32,7 +32,7 @@ const code = `<main class="grid place-items-center">
             <div class="w-full max-w-xs rounded-md border bg-background p-6 text-center">
               <h2 class="title-md">纸灯小测</h2>
               <p class="mt-2 body-sm text-muted-foreground">
-                点一下按钮，看看它会不会安静地回应你。
+                点击按钮查看效果。
               </p>
             </div>
           </div>

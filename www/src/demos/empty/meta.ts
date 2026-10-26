@@ -3,8 +3,8 @@ import { defineMeta } from "@docs/docs/types";
 export default defineMeta({
   title: "Empty",
   zh: "空状态",
-  description: "没有内容时的占位：20% 透明度的 48px Ghost、12 单位的上下留白，入场淡入上浮。",
-  category: "feedback",
+  description: "没有内容时的占位。48px Ghost 图标使用 20% 透明度，上下留白 12 单位，入场时淡入上浮。",
+  category: "data",
   examples: [
     { name: "Default", title: "基础用法" },
     { name: "WithAction", title: "带操作" },

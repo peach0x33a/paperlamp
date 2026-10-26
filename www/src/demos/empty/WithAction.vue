@@ -11,7 +11,7 @@ import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTi
         <Ghost />
       </EmptyMedia>
       <EmptyTitle>还没有人评论</EmptyTitle>
-      <EmptyDescription>玩过之后说两句吧，好坏都行。</EmptyDescription>
+      <EmptyDescription>写下你的看法，好坏都可以。</EmptyDescription>
     </EmptyHeader>
     <EmptyContent>
       <Button variant="outline">

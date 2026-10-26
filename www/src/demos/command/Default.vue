@@ -19,17 +19,17 @@ import {
       <CommandList>
         <CommandEmpty>没有找到匹配的工具、标签或命令。</CommandEmpty>
         <CommandGroup heading="工具">
-          <CommandItem value="便签墙">
+          <CommandItem value="草稿墙">
             <Wrench />
-            便签墙
+            草稿墙
           </CommandItem>
-          <CommandItem value="像素时钟">
+          <CommandItem value="数字时钟">
             <Clock />
-            像素时钟
+            数字时钟
           </CommandItem>
-          <CommandItem value="色块调色盘">
+          <CommandItem value="配色盘">
             <Wrench />
-            色块调色盘
+            配色盘
           </CommandItem>
         </CommandGroup>
         <CommandSeparator />

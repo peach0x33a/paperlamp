@@ -3,7 +3,7 @@ import { defineMeta } from "@docs/docs/types";
 export default defineMeta({
   title: "Kbd",
   zh: "快捷键",
-  description: "等宽的键帽，纸色底配细边框。用在说明文字与菜单里提示快捷键。",
+  description: "等宽键帽，纸色底配细边框，用于说明文字和菜单中的快捷键提示。",
   category: "general",
   examples: [
     { name: "Default", title: "基础用法" },

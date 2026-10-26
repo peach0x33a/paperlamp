@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 
-const names = ["墨鱼", "幻觉制造机", "Nora", "阿土"]
+const names = ["墨鱼", "小镇居民", "Nora", "阿土"]
 </script>
 
 <template>

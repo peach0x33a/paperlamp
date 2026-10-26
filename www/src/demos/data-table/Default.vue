@@ -60,7 +60,7 @@ const totalCount = computed(() => table.getCoreRowModel().rows.length)
       />
       <DropdownMenu>
         <DropdownMenuTrigger as-child>
-          <Button variant="outline" size="sm">
+          <Button variant="outline">
             列显示
             <ChevronDown />
           </Button>

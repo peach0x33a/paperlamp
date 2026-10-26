@@ -28,7 +28,7 @@ const theme = ref("system")
         <MenubarTrigger>文件</MenubarTrigger>
         <MenubarContent>
           <MenubarItem>
-            新建便签
+            新建草稿
             <MenubarShortcut>⌘N</MenubarShortcut>
           </MenubarItem>
           <MenubarItem>

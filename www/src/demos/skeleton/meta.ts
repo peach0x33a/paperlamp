@@ -3,7 +3,7 @@ import { defineMeta } from "@docs/docs/types";
 export default defineMeta({
   title: "Skeleton",
   zh: "骨架屏",
-  description: "内容加载前的占位块，用边框色 50% 的底纹缓慢呼吸。",
+  description: "内容加载前的占位块，使用边框色 50% 的底纹缓慢呼吸。",
   category: "feedback",
   examples: [
     { name: "Default", title: "基础用法" },

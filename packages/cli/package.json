@@ -1,6 +1,6 @@
 {
   "name": "paperlamp",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "纸灯 / Paperlamp CLI — copy Paperlamp Vue components into your project",
   "license": "MIT",
   "type": "module",

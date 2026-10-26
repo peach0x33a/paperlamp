@@ -14,7 +14,7 @@ import { RatingStars } from "@/components/ui/rating"
     <PopoverContent class="grid gap-3">
       <p class="title-md">评分说明</p>
       <p class="body-sm text-muted-foreground">
-        星星是大家的平均分，数字保留一位小数。评分只会在工具页显示，不会公开给评论者。
+        星级为平均分，保留一位小数。评分只显示在工具页。
       </p>
       <div class="grid gap-2">
         <RatingStars :value="4.6" />

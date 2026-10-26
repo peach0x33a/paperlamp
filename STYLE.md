@@ -1,8 +1,6 @@
 # 设计风格手册 —— 纸灯 / Paperlamp
 
 > 本文档描述「纸灯」设计系统的完整视觉风格与组件规范，与 `DESIGN.md` 保持同值同步。
-> 纸灯服务于「幻觉产物 / AI Toybox」应用；实现事实源为 toybox 仓库的
-> `assets/css/global.css` 与组件实际代码。
 > `DESIGN.md` 遵循 Google 开源的 [design.md 规范](https://github.com/google-labs-code/design.md)
 > （规范副本见 `spec/`），修改后运行 `bun run lint` 校验。
 
@@ -64,7 +62,7 @@
 常驻文字用强调文字色（indigo-700）或墨色。星级金在白底上仅 1.53:1，星/圆点
 只能作装饰，语义必须由旁边的等宽数字承担。
 
-评分五档（1 拉 / 2 NPC / 3 人上人 / 4 顶级 / 5 夯）的颜色（gray/green/blue/purple/gold）
+评分五档（1–5 星）的颜色（gray/green/blue/purple/gold）
 是产品配置数据（RATING_CONFIG），不属于设计 token。
 
 ---

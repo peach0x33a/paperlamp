@@ -6,6 +6,6 @@ import { Label } from "@/components/ui/label"
 <template>
   <div class="flex items-center gap-2">
     <Checkbox id="label-demo" />
-    <Label for="label-demo">点击这段文字也能勾选</Label>
+    <Label for="label-demo">点击文字也能勾选</Label>
   </div>
 </template>

@@ -1,12 +1,13 @@
+// Ant Design's taxonomy, which Element Plus, Arco and TDesign share: grouped by what a
+// component does, not where it came from.
 export const CATEGORIES = [
   { id: "general", label: "通用" },
-  { id: "form", label: "表单" },
   { id: "layout", label: "布局" },
-  { id: "overlay", label: "浮层" },
-  { id: "feedback", label: "反馈" },
   { id: "navigation", label: "导航" },
+  { id: "form", label: "数据录入" },
   { id: "data", label: "数据展示" },
-  { id: "signature", label: "纸灯特色" },
+  { id: "feedback", label: "反馈" },
+  { id: "other", label: "其他" },
 ] as const;
 
 export type CategoryId = (typeof CATEGORIES)[number]["id"];

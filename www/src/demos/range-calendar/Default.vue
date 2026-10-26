@@ -10,7 +10,7 @@ const formatter = new DateFormatter("zh-CN", { dateStyle: "medium" })
 const summary = computed(() => {
   const start = range.value?.start
   const end = range.value?.end
-  if (!start || !end) return "还没选时间范围，先点开始日期。"
+  if (!start || !end) return "未选择时间范围。"
   return `上架时间：${formatter.formatRange(start.toDate(getLocalTimeZone()), end.toDate(getLocalTimeZone()))}`
 })
 </script>

@@ -11,9 +11,9 @@ import {
 } from "@/components/ui/navigation-menu"
 
 const tools = [
-  { title: "便签墙", description: "把想法贴在一面纸上，按颜色分组。", href: "#" },
-  { title: "像素时钟", description: "用一格一格的方块显示当前时间。", href: "#" },
-  { title: "色块调色盘", description: "从一个颜色出发，列出相邻的几种。", href: "#" },
+  { title: "草稿墙", description: "把想法贴在一面纸上，按颜色分组。", href: "#" },
+  { title: "数字时钟", description: "用一格一格的方块显示当前时间。", href: "#" },
+  { title: "配色盘", description: "从一个颜色出发，列出相邻的几种。", href: "#" },
   { title: "词语接龙", description: "和朋友轮流接词，不许重复。", href: "#" },
 ]
 </script>

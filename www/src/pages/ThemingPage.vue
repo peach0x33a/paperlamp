@@ -9,7 +9,7 @@ const { isDark } = useTheme()
 const groups: { title: string, note: string, vars: [string, string][] }[] = [
   {
     title: "中性骨架",
-    note: "纸、表面、墨、弱化与细边框承担绝大部分层级。",
+    note: "大部分层级由这几个颜色完成。",
     vars: [
       ["background", "应用背景（纸）"],
       ["card", "卡片 / 弹窗表面"],
@@ -32,7 +32,7 @@ const groups: { title: string, note: string, vars: [string, string][] }[] = [
   },
   {
     title: "Indigo · 交互强调",
-    note: "唯一交互强调色：hover 描边、AI 面板、[评分]。常驻文字走 indigo-text。",
+    note: "交互强调色，用于悬停描边、链接与提示面板。常驻文字用 indigo-text。",
     vars: [
       ["indigo", "hover 文字 / 描边"],
       ["indigo-text", "常驻强调文字"],
@@ -42,7 +42,7 @@ const groups: { title: string, note: string, vars: [string, string][] }[] = [
   },
   {
     title: "状态色",
-    note: "只做反馈，不做装饰。星金必须伴随等宽数字；红色只出现在文字上。",
+    note: "只用于状态反馈。评分星色配等宽数字；红色只用于文字。",
     vars: [
       ["rating", "星级金"],
       ["featured", "精选墨"],
@@ -104,7 +104,7 @@ const snippet = `:root {\n${lightVars}\n  /* … */\n}\n\n.dark {\n  --backgroun
     </h1>
     <p class="mt-3 max-w-[42rem] text-muted-foreground">
       主题以 CSS 变量表达，命名与 shadcn 保持一致，因此任意 shadcn-vue 组件都能直接套用纸灯。
-      变量由 <code class="label-sm text-foreground">DESIGN.md</code> 的 frontmatter 生成，切勿手改。切换右上角主题可看到同一层级在两种纸面上的映射。
+      变量由 <code class="label-sm text-foreground">DESIGN.md</code> 的 frontmatter 生成，修改请改 DESIGN.md。右上角可以切换亮色与暗色。
     </p>
 
     <section v-for="g in groups" :key="g.title" class="mt-12">
@@ -155,7 +155,7 @@ const snippet = `:root {\n${lightVars}\n  /* … */\n}\n\n.dark {\n  --backgroun
           圆角
         </h2>
         <p class="mt-3 text-sm text-muted-foreground">
-          三档圆角都由 <code class="label-sm text-foreground">--radius</code>（默认 8px）推导，改一个变量即可整体调整。可以在<RouterLink to="/create" class="text-foreground underline underline-offset-4 hover:text-indigo">构建</RouterLink>页里预览。
+          三档圆角都由 <code class="label-sm text-foreground">--radius</code>（默认 8px）推导，改这一个变量即可。可以在<RouterLink to="/create" class="text-foreground underline underline-offset-4 hover:text-indigo">构建</RouterLink>页里预览。
         </p>
         <div class="mt-4 grid grid-cols-2 gap-3">
           <div v-for="[cls, label] in radii" :key="cls" class="flex flex-col items-center gap-2 rounded-md border bg-card p-4">

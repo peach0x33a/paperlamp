@@ -52,10 +52,10 @@ import {
       <SidebarInset class="min-h-0">
         <header class="flex h-12 items-center gap-2 border-b px-4">
           <SidebarTrigger />
-          <span class="font-mono label-sm text-muted-foreground">点击左上角按钮，收起为图标</span>
+          <span class="font-mono label-sm text-muted-foreground">点击左上角按钮切换侧栏</span>
         </header>
         <div class="p-6 body-sm text-muted-foreground">
-          收起后，悬停图标会显示对应的名称。展开状态会记在 cookie 里。
+          收起后悬停图标显示名称。展开状态保存在 cookie 中。
         </div>
       </SidebarInset>
     </SidebarProvider>

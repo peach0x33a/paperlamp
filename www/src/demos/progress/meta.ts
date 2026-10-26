@@ -7,6 +7,6 @@ export default defineMeta({
   category: "feedback",
   examples: [
     { name: "Default", title: "基础用法" },
-    { name: "Labeled", title: "带数值", description: "数字用等宽字体放在一旁，而不是塞进进度条里。" },
+    { name: "Labeled", title: "带数值", description: "数字使用等宽字体，放在进度条旁边。" },
   ],
 });

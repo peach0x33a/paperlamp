@@ -15,7 +15,7 @@ import {
     <ContextMenuTrigger as-child>
       <div class="grid w-full max-w-sm gap-2 rounded-md border bg-card p-4 outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring" tabindex="0">
         <p class="title-md">像素小镇生成器</p>
-        <p class="body-sm text-muted-foreground">一句话生成一座有居民的小镇。居民每天都会回家睡觉。</p>
+        <p class="body-sm text-muted-foreground">用一句话生成一座小镇。小镇居民会按作息回家。</p>
         <p class="font-mono label-sm text-muted-foreground">小游戏 · 文字 · 2026-10-18</p>
       </div>
     </ContextMenuTrigger>

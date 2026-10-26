@@ -2,11 +2,10 @@
 version: alpha
 name: 纸灯 / Paperlamp
 description: >-
-  A quiet, text-forward visual system for a Chinese-language Nuxt showcase of
-  AI-assisted tools — soft ink typography on paper-like surfaces, an indigo
-  interaction accent, and lightweight browser-chrome metaphors. Light and dark
-  are the same gallery with the lamps changed. Extracted from the toybox
-  codebase (assets/css/global.css + components); values mirror shipped code.
+  A quiet, text-forward visual system for Chinese-language content sites —
+  soft ink typography on paper-like surfaces, an indigo interaction accent,
+  and lightweight browser-chrome metaphors. Light and dark share one set of
+  variable names.
 colors:
   primary: "#2C2C2C"
   primary-hover: "rgba(44, 44, 44, 0.9)"
@@ -246,8 +245,8 @@ components:
 
 ## Overview
 
-纸灯 (Paperlamp) is the visual language of the 幻觉产物 / AI Toybox showcase —
-a calm, slightly playful exhibition space for AI-made tools: a well-kept
+纸灯 (Paperlamp) is a visual language for Chinese-language content sites —
+a calm, slightly playful space: a well-kept
 reading notebook hung with the hush of a gallery, never a glossy startup
 dashboard. The interface is text-forward and lightweight: generous
 whitespace, subtle borders, restrained color, and Chinese copy that is direct
@@ -314,7 +313,7 @@ already encodes meaning:
 - **Red** {colors.error} appears exactly twice — auth error text and the
   comment delete hover. Never as backgrounds or borders.
 
-Rating tiers (1–5: 拉 / NPC / 人上人 / 顶级 / 夯) carry a config-driven color
+Rating tiers (1–5 stars) carry a config-driven color
 scale — gray `#6B7280`, green `#22C55E`, blue `#3B82F6`, purple `#A855F7`,
 gold `#CA8A04` — treated as product data, not design tokens.
 
@@ -324,7 +323,7 @@ Typography is the personality layer; everything else stays quiet so it can be.
 
 - The **display and body face** is `LXGW WenKai Screen` (霞鹜文楷屏幕阅读版,
   falling back to `LXGW WenKai`, then `serif`) — a literate, humanist face
-  that fits a Chinese-language toybox better than a sterile sans.
+  that suits Chinese-language reading better than a sterile sans.
 - The **monospace face** is `Fira Code` (then `ui-monospace`) for metadata,
   tags, build hashes, URLs, ratings, dates, and system-like affordances.
   Numeric/metadata = mono, prose/headings = WenKai is the consistent split.

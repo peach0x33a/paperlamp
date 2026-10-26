@@ -14,7 +14,7 @@ const route = useRoute()
     </RouterView>
     <footer v-if="!route.meta.bare && !route.meta.app" class="mt-20 border-t border-dashed">
       <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-2 px-4 py-6 label-sm text-muted-foreground">
-        <span>纸灯 / Paperlamp · 设计 token 唯一事实源为 DESIGN.md</span>
+        <span>纸灯 / Paperlamp · MIT 许可 · <a href="https://github.com/peach0x33a/paperlamp" class="underline-offset-4 hover:text-foreground hover:underline">GitHub</a></span>
         <span>Vue 3 · Reka UI · Tailwind CSS v4</span>
       </div>
     </footer>

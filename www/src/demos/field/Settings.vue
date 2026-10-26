@@ -26,7 +26,7 @@ const showMaintenance = ref(true)
             <FieldLabel for="setting-notify">
               <FieldTitle>有新评论时通知我</FieldTitle>
             </FieldLabel>
-            <FieldDescription>工具下出现新评论或评分时，会在站内提醒。</FieldDescription>
+            <FieldDescription>有新评论或评分时，在站内提醒。</FieldDescription>
           </FieldContent>
           <Switch id="setting-notify" v-model="notify" />
         </Field>

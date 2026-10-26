@@ -13,7 +13,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
-const link = ref("https://paperlamp.example/tools/pixel-town")
+const link = ref("https://example.com/tools/pixel-town")
 </script>
 
 <template>

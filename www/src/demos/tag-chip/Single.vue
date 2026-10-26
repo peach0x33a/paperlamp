@@ -2,7 +2,7 @@
 import { ref } from "vue"
 import { TagChipGroup, TagChipGroupItem } from "@/components/ui/tag-chip"
 
-const tags = ["全部", "小游戏", "效率", "可视化", "整活", "学习"]
+const tags = ["全部", "小游戏", "效率", "可视化", "娱乐", "学习"]
 const current = ref("全部")
 </script>
 

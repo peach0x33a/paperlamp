@@ -2,7 +2,7 @@ import { defineMeta } from "@docs/docs/types";
 
 export default defineMeta({
   title: "Label",
-  zh: "标签",
+  zh: "字段标签",
   description: "为表单控件提供可点击的文字说明。通过 for 与控件的 id 关联，点击标签即可聚焦或切换控件。",
   category: "form",
   examples: [

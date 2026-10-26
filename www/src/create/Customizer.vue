@@ -87,11 +87,11 @@ defineExpose({ openPreset: () => (openDialog.value = true) })
         <Kbd>O</Kbd>
       </Button>
       <Button variant="outline" class="w-full justify-between" @click="randomize">
-        <span class="inline-flex items-center gap-2"><Dices /> 随机</span>
+        <span class="inline-flex items-center gap-2"><Dices /> 随机主题</span>
         <Kbd>R</Kbd>
       </Button>
       <Button variant="ghost" class="w-full justify-start" :disabled="isDefault" @click="reset">
-        <RotateCcw /> 恢复默认
+        <RotateCcw /> 恢复默认主题
       </Button>
       <Button class="mt-2 w-full" @click="codeDialog = true">
         获取代码

@@ -16,7 +16,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
       </TabsTrigger>
     </TabsList>
     <TabsContent value="intro" class="body-md">
-      <p>这个工具还没有更新日志，第一次发布后会出现在这里。</p>
+      <p>首次发布后显示更新日志。</p>
     </TabsContent>
     <TabsContent value="comments" class="body-md">
       <p class="text-muted-foreground">暂无评论。</p>
