@@ -6,10 +6,20 @@ import { Kbd } from "@/components/ui/kbd"
 import { toast } from "@/components/ui/sonner"
 import GetCodeDialog from "./GetCodeDialog.vue"
 import OpenPresetDialog from "./OpenPresetDialog.vue"
-import RadiusPicker from "./RadiusPicker.vue"
-import { usePreset } from "./usePreset"
+import OptionPicker from "./OptionPicker.vue"
+import { BASES, FONTS, RADII, THEMES, usePreset } from "./usePreset"
 
-const { code, canUndo, canRedo, isDefault, undo, redo, randomize, reset } = usePreset()
+const { preset, code, canUndo, canRedo, isDefault, set, setOverride, clearOverride, undo, redo, randomize, reset } = usePreset()
+
+const bases = BASES.map(b => ({ value: b.name, label: b.label }))
+const themes = THEMES.map(t => ({ value: t.name, label: t.label }))
+const fonts = FONTS.map(f => ({ value: f.name, label: f.label }))
+const radii = [...RADII].sort((a, b) => Number(b.name === "default") - Number(a.name === "default"))
+  .map(r => ({ value: r.name, label: r.label, hint: r.value }))
+const swatch = (list: readonly { name: string, swatch: string }[], v: string) => list.find(x => x.name === v)!.swatch
+const fontFamily = (v: string) => FONTS.find(f => f.name === v)!.value ?? "var(--font-serif)"
+const radius = (v: string) => RADII.find(r => r.name === v)!.value
+const preview = (key: keyof typeof preset.value) => (v: string | null) => (v ? setOverride({ [key]: v }) : clearOverride())
 
 const openDialog = ref(false)
 const codeDialog = ref(false)
@@ -44,8 +54,27 @@ defineExpose({ openPreset: () => (openDialog.value = true) })
       </div>
     </header>
 
-    <div class="min-h-0 flex-1 overflow-y-auto p-2">
-      <RadiusPicker />
+    <div class="grid min-h-0 flex-1 content-start gap-0.5 overflow-y-auto p-2">
+      <OptionPicker title="基色" :options="bases" :model-value="preset.base" @update:model-value="(v) => set({ base: v })" @preview="preview('base')">
+        <template #icon="{ value }">
+          <span class="size-4 shrink-0 rounded-full border border-black/10" :style="{ background: swatch(BASES, value) }" aria-hidden="true" />
+        </template>
+      </OptionPicker>
+      <OptionPicker title="主题色" :options="themes" :model-value="preset.theme" @update:model-value="(v) => set({ theme: v })" @preview="preview('theme')">
+        <template #icon="{ value }">
+          <span class="size-4 shrink-0 rounded-full border border-black/10" :style="{ background: swatch(THEMES, value) }" aria-hidden="true" />
+        </template>
+      </OptionPicker>
+      <OptionPicker title="字体" :options="fonts" :model-value="preset.font" @update:model-value="(v) => set({ font: v })" @preview="preview('font')">
+        <template #icon="{ value }">
+          <span class="w-5 shrink-0 text-center text-base leading-none" :style="{ fontFamily: fontFamily(value) }" aria-hidden="true">文</span>
+        </template>
+      </OptionPicker>
+      <OptionPicker title="圆角" :options="radii" :model-value="preset.radius" @update:model-value="(v) => set({ radius: v })" @preview="preview('radius')">
+        <template #icon="{ value }">
+          <span class="size-4 shrink-0 rounded-tl-[var(--r)] border-t-2 border-l-2 border-current" :style="{ '--r': radius(value) }" aria-hidden="true" />
+        </template>
+      </OptionPicker>
     </div>
 
     <footer class="grid gap-2 border-t p-4">

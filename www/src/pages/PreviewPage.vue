@@ -4,35 +4,40 @@ import { useEventListener } from "@vueuse/core"
 import { onMounted, ref, watch } from "vue"
 import { useRoute } from "vue-router"
 import { useTheme } from "../composables/useTheme"
+import BlocksPreview from "../create/previews/BlocksPreview.vue"
 import ComponentsPreview from "../create/previews/ComponentsPreview.vue"
-import GalleryPreview from "../create/previews/GalleryPreview.vue"
-import PayloadPreview from "../create/previews/PayloadPreview.vue"
+import DashboardPreview from "../create/previews/DashboardPreview.vue"
+import { decodePreset, DEFAULT_PRESET, presetCss } from "../create/usePreset"
 
-// Rendered inside the /create iframe (or standalone in a new tab). Radius and mode are
+// Rendered inside the /create iframe (or standalone in a new tab). The preset and mode are
 // applied to this document only, so the builder chrome around it is never affected.
 const route = useRoute()
 const q = (k: string) => (typeof route.query[k] === "string" ? (route.query[k] as string) : undefined)
 
-const radius = ref(q("radius") ?? "8px")
+const preset = ref(q("preset") ?? "")
 const mode = ref<PreviewMode>(q("mode") === "dark" ? "dark" : "light")
-const page = ref<PreviewPage>((["gallery", "components", "payload"] as const).find(p => p === q("page")) ?? "gallery")
+const page = ref<PreviewPage>((["blocks", "dashboard", "components"] as const).find(p => p === q("page")) ?? "blocks")
 
 const { isDark } = useTheme()
+let style: HTMLStyleElement | undefined
 function apply() {
-  const el = document.documentElement
-  el.style.setProperty("--radius", radius.value)
-  el.classList.toggle("dark", mode.value === "dark")
+  // Doubled selectors outrank paperlamp.css regardless of stylesheet order.
+  style ??= document.head.appendChild(document.createElement("style"))
+  style.textContent = presetCss(decodePreset(preset.value) ?? DEFAULT_PRESET)
+    .replace(/^:root \{/m, ":root:root {")
+    .replace(/^\.dark \{/m, ":root.dark {")
+  document.documentElement.classList.toggle("dark", mode.value === "dark")
 }
 onMounted(() => {
   apply()
   if (window.parent !== window) window.parent.postMessage({ type: "paperlamp:ready" }, location.origin)
 })
 // useTheme owns html.dark for the docs site; re-assert the preview's own mode if it flips.
-watch([radius, mode, isDark], apply, { flush: "post" })
+watch([preset, mode, isDark], apply, { flush: "post" })
 
 useEventListener(window, "message", (e: MessageEvent<PreviewMessage>) => {
   if (e.origin !== location.origin || e.data?.type !== "paperlamp:preview") return
-  radius.value = e.data.radius
+  preset.value = e.data.preset
   mode.value = e.data.mode
   page.value = e.data.page
 })
@@ -52,8 +57,8 @@ useEventListener(window, "keydown", (e: KeyboardEvent) => {
 
 <template>
   <div class="min-h-svh bg-background text-foreground">
-    <GalleryPreview v-if="page === 'gallery'" />
-    <ComponentsPreview v-else-if="page === 'components'" />
-    <PayloadPreview v-else />
+    <BlocksPreview v-if="page === 'blocks'" />
+    <DashboardPreview v-else-if="page === 'dashboard'" />
+    <ComponentsPreview v-else />
   </div>
 </template>

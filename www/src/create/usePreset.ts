@@ -1,8 +1,8 @@
 import type { Preset } from "../../../packages/cli/src/preset";
 import { computed, ref } from "vue";
-import { decodePreset, DEFAULT_PRESET, encodePreset, RADII, radiusValue } from "../../../packages/cli/src/preset";
+import { BASES, decodePreset, DEFAULT_PRESET, encodePreset, FONTS, presetCss, RADII, radiusValue, THEMES } from "../../../packages/cli/src/preset";
 
-export { decodePreset, DEFAULT_PRESET, encodePreset, RADII, radiusValue };
+export { BASES, decodePreset, DEFAULT_PRESET, encodePreset, FONTS, presetCss, RADII, radiusValue, THEMES };
 export type { Preset };
 
 // Module-level state: the customizer, the preview frame and the dialogs share one preset.
@@ -43,8 +43,17 @@ export function usePreset() {
   }
 
   function randomize() {
-    const choices = RADII.filter((r) => r.name !== preset.value.radius);
-    set({ radius: choices[Math.floor(Math.random() * choices.length)]!.name });
+    const pick = <T>(xs: readonly T[]) => xs[Math.floor(Math.random() * xs.length)]!;
+    let next: Preset;
+    do {
+      next = {
+        radius: pick(RADII).name,
+        base: pick(BASES).name,
+        theme: pick(THEMES).name,
+        font: pick(FONTS).name,
+      };
+    } while (same(next, preset.value));
+    set(next);
   }
 
   /** Replace the preset without recording history (initial load from the URL). */
@@ -78,12 +87,12 @@ export function extractPreset(input: string): Preset | null {
   return decodePreset((fromQuery ?? fromFlag ?? s).toLowerCase());
 }
 
-export type PreviewPage = "gallery" | "components" | "payload";
+export type PreviewPage = "blocks" | "dashboard" | "components";
 export type PreviewMode = "light" | "dark";
 
 export interface PreviewMessage {
   type: "paperlamp:preview";
-  radius: string;
+  preset: string;
   mode: PreviewMode;
   page: PreviewPage;
 }

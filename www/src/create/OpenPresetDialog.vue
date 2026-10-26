@@ -21,7 +21,7 @@ watch(open, (o) => {
 function submit() {
   const p = extractPreset(text.value)
   if (!p) {
-    error.value = "没认出 preset。可以粘贴 a4 这样的代码、带 --preset 的命令，或构建页的链接。"
+    error.value = "没认出 preset。可以粘贴 a2000 这样的代码、带 --preset 的命令，或构建页的链接。"
     return
   }
   set(p)
@@ -35,7 +35,7 @@ function submit() {
     <form class="grid gap-4" @submit.prevent="submit">
       <div class="grid gap-2">
         <Label for="preset-input">Preset</Label>
-        <Input id="preset-input" v-model="text" placeholder="a4" autocomplete="off" :aria-invalid="error ? 'true' : undefined" />
+        <Input id="preset-input" v-model="text" placeholder="a2000" autocomplete="off" :aria-invalid="error ? 'true' : undefined" />
         <p v-if="error" class="body-sm text-destructive">
           {{ error }}
         </p>

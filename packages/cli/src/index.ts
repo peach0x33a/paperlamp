@@ -12,7 +12,8 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import process from "node:process";
 import pkg from "../package.json" with { type: "json" };
-import { decodePreset, DEFAULT_PRESET, encodePreset, RADII, radiusValue } from "./preset";
+import type { Preset } from "./preset";
+import { applyPreset, decodePreset, DEFAULT_PRESET, encodePreset, RADII, radiusValue } from "./preset";
 
 interface FileEntry {
   path: string;
@@ -207,23 +208,22 @@ function hasAtAlias(cwd: string) {
 
 // ---------- commands
 
-function radiusFrom(flags: Args["flags"]): { radius: string; preset?: string } {
+function presetFrom(flags: Args["flags"]): { preset: Preset; radius: string; code?: string } {
   const presetFlag = str(flags.preset);
   if (presetFlag) {
     const p = decodePreset(presetFlag);
     if (!p) fail(`无法识别的 preset：${presetFlag}`);
-    return { radius: radiusValue(p!.radius), preset: encodePreset(p!) };
+    return { preset: p!, radius: radiusValue(p!.radius), code: encodePreset(p!) };
   }
   const r = str(flags.radius);
-  if (!r) return { radius: radiusValue(DEFAULT_PRESET.radius), preset: encodePreset(DEFAULT_PRESET) };
+  if (!r) return { preset: DEFAULT_PRESET, radius: radiusValue(DEFAULT_PRESET.radius), code: encodePreset(DEFAULT_PRESET) };
   const named = RADII.find((x) => x.name === r);
-  if (named) return { radius: named.value, preset: encodePreset({ radius: named.name }) };
-  if (/^\d+(\.\d+)?(px|rem|em)$|^0$/.test(r)) return { radius: r };
+  if (named) {
+    const p = { ...DEFAULT_PRESET, radius: named.name };
+    return { preset: p, radius: named.value, code: encodePreset(p) };
+  }
+  if (/^\d+(\.\d+)?(px|rem|em)$|^0$/.test(r)) return { preset: DEFAULT_PRESET, radius: r };
   return fail(`--radius 只接受 ${RADII.map((x) => x.name).join(" / ")}，或一个长度值（如 6px、0.5rem）`);
-}
-
-function applyRadius(css: string, radius: string) {
-  return css.replace(/--radius:\s*[^;]+;/, `--radius: ${radius};`);
 }
 
 /** Put the theme imports at the top of the user's main CSS file, in the required order. */
@@ -248,7 +248,7 @@ async function init(cwd: string, flags: Args["flags"]) {
 
   const cssFile = str(flags.css) ?? existing?.css ?? CSS_CANDIDATES.find((f) => existsSync(join(cwd, f))) ?? "src/style.css";
   const createdCss = !existsSync(join(cwd, cssFile));
-  const { radius, preset } = radiusFrom(flags);
+  const { preset: chosen, radius, code: preset } = presetFrom(flags);
 
   const config: Config = {
     registry,
@@ -266,7 +266,7 @@ async function init(cwd: string, flags: Args["flags"]) {
   });
 
   const themeFile = join(dirname(join(cwd, cssFile)), "paperlamp.css");
-  write(themeFile, applyRadius(style!.files[0]!.content, radius));
+  write(themeFile, applyPreset(style!.files[0]!.content, chosen, radius));
   let themeImport = relative(dirname(join(cwd, cssFile)), themeFile).replace(/\\/g, "/");
   if (!themeImport.startsWith(".")) themeImport = `./${themeImport}`;
   ensureImports(join(cwd, cssFile), [...(style!.cssImports ?? []), themeImport]);
@@ -274,7 +274,7 @@ async function init(cwd: string, flags: Args["flags"]) {
   const written = writeItems(cwd, config, rest, Boolean(flags.overwrite));
   write(join(cwd, CONFIG_FILE), `${JSON.stringify(config, null, 2)}\n`);
 
-  console.log(`${green("✓")} ${"主题".padEnd(14)}${relative(cwd, themeFile)}  ${dim(`--radius: ${radius}`)}`);
+  console.log(`${green("✓")} ${"主题".padEnd(14)}${relative(cwd, themeFile)}  ${dim(preset ? `preset ${preset}` : `--radius: ${radius}`)}`);
   console.log(`${green("✓")} ${"样式".padEnd(14)}${cssFile}${createdCss ? dim("（新建）") : ""}`);
   for (const w of written) console.log(w);
   console.log(`${green("✓")} ${"配置".padEnd(14)}${CONFIG_FILE}`);

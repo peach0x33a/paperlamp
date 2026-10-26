@@ -4,7 +4,7 @@ import { useEventListener } from "@vueuse/core"
 import { ExternalLink, Moon, Sun } from "lucide-vue-next"
 import { computed, ref, watch } from "vue"
 import { useTheme } from "../composables/useTheme"
-import { radiusValue, usePreset } from "./usePreset"
+import { encodePreset, usePreset } from "./usePreset"
 
 const emit = defineEmits<{ key: [msg: KeyMessage] }>()
 
@@ -12,23 +12,24 @@ const { effective, code } = usePreset()
 const { isDark } = useTheme()
 
 const pages: { id: PreviewPage, label: string }[] = [
-  { id: "gallery", label: "展厅" },
+  { id: "blocks", label: "示例" },
+  { id: "dashboard", label: "仪表盘" },
   { id: "components", label: "组件" },
-  { id: "payload", label: "工具页" },
 ]
-const page = ref<PreviewPage>("gallery")
+const page = ref<PreviewPage>("blocks")
 const mode = ref<PreviewMode>(isDark.value ? "dark" : "light")
 
 const frame = ref<HTMLIFrameElement>()
 const message = computed<PreviewMessage>(() => ({
   type: "paperlamp:preview",
-  radius: radiusValue(effective.value.radius),
+  preset: encodePreset(effective.value),
   mode: mode.value,
   page: page.value,
 }))
 // The src is fixed at mount so the frame never reloads; later changes travel by postMessage.
-const src = `/create/preview?${new URLSearchParams({ radius: message.value.radius, mode: mode.value, page: page.value })}`
-const standalone = computed(() => `/create/preview?${new URLSearchParams({ radius: message.value.radius, mode: mode.value, page: page.value })}`)
+const query = () => new URLSearchParams({ preset: message.value.preset, mode: mode.value, page: page.value })
+const src = `/create/preview?${query()}`
+const standalone = computed(() => `/create/preview?${query()}`)
 
 function send() {
   frame.value?.contentWindow?.postMessage(message.value, location.origin)
