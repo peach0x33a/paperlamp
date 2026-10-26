@@ -1,0 +1,35 @@
+name: Publish CLI
+
+# Push a tag such as v0.1.1 after bumping packages/cli/package.json.
+# npm authenticates this workflow through trusted publishing (OIDC); no token is stored.
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packages/cli
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      # Trusted publishing needs npm >= 11.5.1, which ships with Node 24.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+      - name: Check tag matches package version
+        run: |
+          version=$(node -p "require('./package.json').version")
+          if [ "v$version" != "$GITHUB_REF_NAME" ]; then
+            echo "tag $GITHUB_REF_NAME does not match packages/cli version $version" >&2
+            exit 1
+          fi
+      - run: bun run build
+      - run: npm publish --access public

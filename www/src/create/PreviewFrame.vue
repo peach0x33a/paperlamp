@@ -28,8 +28,8 @@ const message = computed<PreviewMessage>(() => ({
 }))
 // The src is fixed at mount so the frame never reloads; later changes travel by postMessage.
 const query = () => new URLSearchParams({ preset: message.value.preset, mode: mode.value, page: page.value })
-const src = `/create/preview?${query()}`
-const standalone = computed(() => `/create/preview?${query()}`)
+const src = `${import.meta.env.BASE_URL}create/preview?${query()}`
+const standalone = computed(() => `${import.meta.env.BASE_URL}create/preview?${query()}`)
 
 function send() {
   frame.value?.contentWindow?.postMessage(message.value, location.origin)

@@ -7,6 +7,8 @@ import { defineConfig } from "vite";
 // `@/components/ui` and `@/lib` resolve into registry/ so every component file is
 // written exactly as it will look after `paperlamp add` copies it into a project.
 export default defineConfig({
+  // GitHub Pages serves the site under /paperlamp/; local dev stays at the root.
+  base: process.env.BASE_PATH ?? "/",
   root: fileURLToPath(new URL("./www", import.meta.url)),
   plugins: [vue(), tailwindcss()],
   resolve: {

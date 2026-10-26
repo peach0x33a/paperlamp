@@ -10,7 +10,7 @@ declare module "vue-router" {
 }
 
 export const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(import.meta.env.BASE_URL),
   scrollBehavior: (to, _from, saved) => saved ?? (to.hash ? { el: to.hash, top: 80 } : { top: 0 }),
   routes: [
     { path: "/", component: () => import("./pages/HomePage.vue") },

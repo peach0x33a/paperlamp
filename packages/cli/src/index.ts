@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // paperlamp — copy Paperlamp components into a Vue + Tailwind v4 project.
 //
-//   paperlamp init --registry <url> [--preset <code> | --radius <name|length>] [--css <file>]
+//   paperlamp init [--registry <url>] [--preset <code> | --radius <name|length>] [--css <file>]
 //   paperlamp add <name...> [--all] [--overwrite]
 //   paperlamp list
 //
@@ -41,6 +41,8 @@ interface Config {
 }
 
 const CONFIG_FILE = "paperlamp.json";
+/** The public docs site; --registry or PAPERLAMP_REGISTRY point elsewhere (forks, local dev). */
+const DEFAULT_REGISTRY = "https://peach0x33a.github.io/paperlamp/r";
 const CATEGORY_LABELS: Record<string, string> = {
   general: "通用",
   form: "表单",
@@ -177,7 +179,7 @@ const normalizeRegistry = (url: string) => {
 
 function loadConfig(cwd: string): Config {
   const c = readJson<Config>(join(cwd, CONFIG_FILE));
-  if (!c) fail(`当前目录没有 ${CONFIG_FILE}。先运行 paperlamp init --registry <地址>`);
+  if (!c) fail(`当前目录没有 ${CONFIG_FILE}。先运行 paperlamp init`);
   return c!;
 }
 
@@ -242,9 +244,7 @@ async function init(cwd: string, flags: Args["flags"]) {
   if (!existsSync(join(cwd, "package.json"))) fail("当前目录没有 package.json，请在项目根目录运行");
 
   const existing = readJson<Config>(join(cwd, CONFIG_FILE));
-  const registryFlag = str(flags.registry) ?? process.env.PAPERLAMP_REGISTRY ?? existing?.registry;
-  if (!registryFlag) fail("需要 registry 地址：paperlamp init --registry https://<文档站>/r");
-  const registry = normalizeRegistry(registryFlag!);
+  const registry = normalizeRegistry(str(flags.registry) ?? process.env.PAPERLAMP_REGISTRY ?? existing?.registry ?? DEFAULT_REGISTRY);
 
   const cssFile = str(flags.css) ?? existing?.css ?? CSS_CANDIDATES.find((f) => existsSync(join(cwd, f))) ?? "src/style.css";
   const createdCss = !existsSync(join(cwd, cssFile));
@@ -339,7 +339,7 @@ async function fetchIndex(registry: string) {
 
 async function list(cwd: string, flags: Args["flags"]) {
   const registry = normalizeRegistry(
-    str(flags.registry) ?? readJson<Config>(join(cwd, CONFIG_FILE))?.registry ?? process.env.PAPERLAMP_REGISTRY ?? fail("需要 --registry <地址>"),
+    str(flags.registry) ?? readJson<Config>(join(cwd, CONFIG_FILE))?.registry ?? process.env.PAPERLAMP_REGISTRY ?? DEFAULT_REGISTRY,
   );
   const { items } = await fetchIndex(registry);
   const groups = new Map<string, typeof items>();
@@ -356,7 +356,8 @@ async function list(cwd: string, flags: Args["flags"]) {
 const HELP = `${bold("paperlamp")} ${dim(pkg.version)} — 把纸灯组件源码复制进你的 Vue 项目
 
 用法
-  paperlamp init --registry <url>   写入主题、cn() 工具与 paperlamp.json
+  paperlamp init                    写入主题、cn() 工具与 paperlamp.json
+      --registry <url>              组件来源（默认 ${DEFAULT_REGISTRY}）
       --preset <code>               使用 /create 构建器生成的 preset
       --radius <name|长度>          ${RADII.map((r) => r.name).join(" / ")}，或 6px、0.5rem
       --css <file>                  主样式文件（默认自动查找，找不到则新建 src/style.css）

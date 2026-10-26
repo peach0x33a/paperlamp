@@ -19,15 +19,17 @@ bun run build      # 类型检查 + 构建静态站到 dist/（含 /r/*.json reg
 bun run build:cli  # 构建命令行工具到 packages/cli/dist/
 ```
 
-在其他项目中使用（演示站即 registry 服务器）：
+在其他项目中使用（文档站 <https://peach0x33a.github.io/paperlamp/> 即 registry 服务器）：
 
 ```bash
-npx paperlamp@latest init --registry http://localhost:5180/r   # 主题、cn()、paperlamp.json 与依赖
-npx paperlamp@latest add button tool-card                      # 组件及其依赖的组件
+npx paperlamp@latest init        # 主题、cn()、paperlamp.json 与依赖
+npx paperlamp@latest add button  # 组件及其依赖的组件
 ```
 
+本地调试 registry 时加 `--registry http://localhost:5180/r`。
+
 registry 里组件之间按名字互相引用，部署到任何地址都不需要重新生成。
-演示站的「构建」页（`/create`）可以调圆角并生成 preset，用 `init --preset <code>` 应用。
+文档站的「构建」页（`/create`）可以调基色、主题色、字体与圆角并生成 preset，用 `init --preset <code>` 应用。
 
 ## 架构
 
