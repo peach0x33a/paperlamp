@@ -1,7 +1,7 @@
-# 设计风格手册 —— 素墨 / Quiet Ink
+# 设计风格手册 —— 纸灯 / Paperlamp
 
-> 本文档描述「素墨」设计系统的完整视觉风格与组件规范，与 `DESIGN.md` 保持同值同步。
-> 素墨服务于「幻觉产物 / AI Toybox」应用；实现事实源为 toybox 仓库的
+> 本文档描述「纸灯」设计系统的完整视觉风格与组件规范，与 `DESIGN.md` 保持同值同步。
+> 纸灯服务于「幻觉产物 / AI Toybox」应用；实现事实源为 toybox 仓库的
 > `assets/css/global.css` 与组件实际代码。
 > `DESIGN.md` 遵循 Google 开源的 [design.md 规范](https://github.com/google-labs-code/design.md)
 > （规范副本见 `spec/`），修改后运行 `bun run lint` 校验。

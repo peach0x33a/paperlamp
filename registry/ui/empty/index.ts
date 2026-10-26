@@ -1,0 +1,27 @@
+import type { VariantProps } from "class-variance-authority";
+import { cva } from "class-variance-authority";
+
+export { default as Empty } from "./Empty.vue";
+export { default as EmptyContent } from "./EmptyContent.vue";
+export { default as EmptyDescription } from "./EmptyDescription.vue";
+export { default as EmptyHeader } from "./EmptyHeader.vue";
+export { default as EmptyMedia } from "./EmptyMedia.vue";
+export { default as EmptyTitle } from "./EmptyTitle.vue";
+
+export const emptyMediaVariants = cva(
+  "mb-2 flex shrink-0 items-center justify-center [&_svg]:pointer-events-none [&_svg]:shrink-0",
+  {
+    variants: {
+      variant: {
+        /** The empty-state Ghost: 48px at 20% opacity, no frame. */
+        default: "bg-transparent [&_svg]:opacity-20 [&_svg:not([class*='size-'])]:size-12",
+        icon: "size-10 rounded-sm bg-muted text-foreground [&_svg:not([class*='size-'])]:size-6",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+    },
+  },
+);
+
+export type EmptyMediaVariants = VariantProps<typeof emptyMediaVariants>;

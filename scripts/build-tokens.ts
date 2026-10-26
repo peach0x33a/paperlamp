@@ -1,11 +1,20 @@
-// Compile DESIGN.md frontmatter tokens into site/tokens.css.
-// DESIGN.md is the single source of truth — never edit tokens.css by hand.
+// Compile DESIGN.md frontmatter tokens into the shadcn-style theme.
+// DESIGN.md is the single source of truth — never edit the generated files by hand.
+//
+// Outputs:
+//   registry/styles/paperlamp.css   Tailwind v4 theme: :root / .dark variables (shadcn
+//                                   semantic names + Paperlamp extras), @theme inline
+//                                   mapping, typography @utility classes and base layer.
+//   registry/styles/tokens.json     The same variables as data (consumed by
+//                                   build-registry.ts to emit the `cssVars` of the
+//                                   `paperlamp` style item).
+//
 // Usage: bun run build:tokens
 
 import { parse } from "yaml";
 
 const src = await Bun.file(new URL("../DESIGN.md", import.meta.url)).text();
-const match = src.match(/^---\n([\s\S]*?)\n---/);
+const match = src.match(/^---\r?\n([\s\S]*?)\r?\n---/);
 if (!match) throw new Error("DESIGN.md has no YAML frontmatter");
 const fm = parse(match[1]);
 
@@ -14,115 +23,194 @@ for (const key of ["colors", "colors-dark", "typography", "rounded", "spacing", 
     throw new Error(`DESIGN.md frontmatter is missing the "${key}" token group`);
   }
 }
-for (const level of ["body-md", "label-md"]) {
-  if (!fm.typography[level]?.fontFamily) {
-    throw new Error(`DESIGN.md typography is missing "${level}" (needed for the font variables)`);
-  }
+
+type Palette = Record<string, string>;
+
+/** Fractional neutral fill, built from a token exactly as DESIGN.md prescribes (20–60% washes). */
+const wash = (color: string, pct: number) => `color-mix(in oklab, ${color} ${pct}%, transparent)`;
+
+function need(p: Palette, name: string, mode: string): string {
+  const v = p[name];
+  if (!v) throw new Error(`DESIGN.md ${mode} palette is missing color "${name}"`);
+  return v;
 }
 
-// DESIGN.md token → CSS variable mapping documented in DESIGN.md/STYLE.md:
-// neutral=--bg surface=--surface on-surface=--text secondary=--text-muted
-// border=--border rounded.md=--radius
-const COLOR_VARS: Record<string, string> = {
-  neutral: "--bg",
-  surface: "--surface",
-  "on-surface": "--text",
-  secondary: "--text-muted",
-  border: "--border",
-  primary: "--ink",
-  "primary-hover": "--ink-hover",
-  overlay: "--overlay",
-  accent: "--accent",
-  "accent-bar": "--accent-bar",
-  "accent-text": "--accent-text",
-  "accent-wash": "--accent-wash",
-  rating: "--rating",
-  featured: "--featured",
-  "featured-wash": "--featured-wash",
-  warning: "--warning",
-  "warning-bar": "--warning-bar",
-  "warning-text": "--warning-text",
-  "warning-wash": "--warning-wash",
-  error: "--error",
+/**
+ * DESIGN.md token → shadcn semantic variable.
+ *
+ * shadcn names are kept verbatim so components copied from shadcn-vue keep working;
+ * where shadcn semantics collide with Paperlamp token names the shadcn meaning wins
+ * and the Paperlamp family is re-exposed under its own name:
+ *   - shadcn `secondary` / `muted` / `accent` are quiet neutral fills (DESIGN.md
+ *     "Quiet neutral fills are built from border at fractional opacity").
+ *   - DESIGN.md `secondary` (muted text)     → --muted-foreground
+ *   - DESIGN.md `accent*` (indigo family)    → --indigo / --indigo-bar / --indigo-text / --indigo-wash
+ *   - DESIGN.md `error`                      → --destructive (text only, never a fill)
+ */
+function semantic(p: Palette, mode: string): Record<string, string> {
+  const c = (n: string) => need(p, n, mode);
+  return {
+    background: c("neutral"),
+    foreground: c("on-surface"),
+    card: c("surface"),
+    "card-foreground": c("on-surface"),
+    popover: c("surface"),
+    "popover-foreground": c("on-surface"),
+    primary: c("primary"),
+    "primary-hover": c("primary-hover"),
+    "primary-foreground": c("neutral"),
+    secondary: wash(c("border"), 60),
+    "secondary-foreground": c("on-surface"),
+    muted: wash(c("border"), 40),
+    "muted-foreground": c("secondary"),
+    accent: wash(c("border"), 50),
+    "accent-foreground": c("on-surface"),
+    destructive: c("error"),
+    border: c("border"),
+    input: c("border"),
+    ring: c("primary"),
+    overlay: c("overlay"),
+    indigo: c("accent"),
+    "indigo-bar": c("accent-bar"),
+    "indigo-text": c("accent-text"),
+    "indigo-wash": c("accent-wash"),
+    rating: c("rating"),
+    featured: c("featured"),
+    "featured-wash": c("featured-wash"),
+    "featured-border": c("featured-border"),
+    warning: c("warning"),
+    "warning-bar": c("warning-bar"),
+    "warning-text": c("warning-text"),
+    "warning-wash": c("warning-wash"),
+  };
+}
+
+const light = semantic(fm.colors, "colors");
+const dark = semantic(fm["colors-dark"], "colors-dark");
+
+// Non-color variables live only in :root (shared by both themes).
+const r = fm.rounded;
+const root: Record<string, string> = {
+  radius: r.md,
+  "font-serif": fm.typography["body-md"].fontFamily,
+  "font-mono": fm.typography["label-md"].fontFamily,
 };
+for (const [k, v] of Object.entries<string>(fm.motion)) root[`motion-${k}`] = v;
 
-const emitted = new Set<string>();
+// @theme inline: expose everything as Tailwind utilities (bg-primary, text-indigo-text, …).
+const theme: Record<string, string> = {};
+for (const name of Object.keys(light)) theme[`color-${name}`] = `var(--${name})`;
+theme["font-sans"] = "var(--font-serif)";
+theme["font-serif"] = "var(--font-serif)";
+theme["font-mono"] = "var(--font-mono)";
+// Two working radius tiers + toast tier: controls 4px, containers 8px (--radius), toast 12px.
+theme["radius-sm"] = r.sm;
+theme["radius-md"] = "var(--radius)";
+theme["radius-lg"] = r.lg;
+for (const [k, v] of Object.entries<string>(fm.shadow)) theme[`shadow-${k}`] = v;
+theme["container-content"] = fm.spacing.container;
+theme["ease-quiet"] = fm.motion.easing;
+theme["animate-fade-up"] = `fade-up ${fm.motion.entrance} ${fm.motion["easing-entrance"]} both`;
 
-function colorBlock(colors: Record<string, string>, indent = "  "): string {
-  return Object.entries(colors)
-    .map(([name, value]) => {
-      const cssVar = COLOR_VARS[name];
-      if (!cssVar) throw new Error(`No CSS variable mapping for color token "${name}"`);
-      emitted.add(cssVar);
-      return `${indent}${cssVar}: ${value};`;
-    })
-    .join("\n");
-}
+const block = (sel: string, vars: Record<string, string>, indent = "  ") =>
+  [`${sel} {`, ...Object.entries(vars).map(([k, v]) => `${indent}--${k}: ${v};`), "}"].join("\n");
 
-function emit(cssVar: string, value: unknown): string {
-  emitted.add(cssVar);
-  return `  ${cssVar}: ${value};`;
-}
-
-const lines: string[] = [
+const out: string[] = [
   "/* Generated from DESIGN.md by scripts/build-tokens.ts — do not edit. */",
+  "/* Usage: @import \"tailwindcss\"; @import \"tw-animate-css\"; @import \"./paperlamp.css\"; */",
   "",
-  ":root {",
-  colorBlock(fm.colors),
+  "@custom-variant dark (&:is(.dark *));",
+  "",
+  block(":root", { ...root, ...light }),
+  "",
+  block(".dark", dark),
+  "",
+  block("@theme inline", theme),
+  "",
+  "@keyframes fade-up {",
+  "  from { opacity: 0; transform: translateY(10px); }",
+  "}",
+  "",
 ];
 
-for (const [key, value] of Object.entries(fm.spacing)) lines.push(emit(`--sp-${key}`, value));
-for (const [key, value] of Object.entries(fm.rounded)) {
-  if (key === "md") lines.push(emit("--radius", value));
-  else if (key !== "DEFAULT") lines.push(emit(`--radius-${key}`, value));
-}
-for (const [key, value] of Object.entries(fm.shadow)) lines.push(emit(`--shadow-${key}`, value));
-for (const [key, value] of Object.entries(fm.motion)) lines.push(emit(`--motion-${key}`, value));
-lines.push(emit("--font-serif", fm.typography["body-md"].fontFamily));
-lines.push(emit("--font-mono", fm.typography["label-md"].fontFamily));
-
-// Per-level typography variables so component CSS never restates raw values.
-for (const [name, t] of Object.entries<any>(fm.typography)) {
-  lines.push(emit(`--type-${name}-size`, t.fontSize));
-  lines.push(emit(`--type-${name}-weight`, t.fontWeight));
-  lines.push(emit(`--type-${name}-lh`, t.lineHeight));
-  if (t.letterSpacing != null) lines.push(emit(`--type-${name}-ls`, t.letterSpacing));
-}
-lines.push("}", "");
-
-lines.push("html.dark {", colorBlock(fm["colors-dark"]), "}", "");
-
-// One utility class per typography level, resolved through the variables above.
+// One utility per typography level: `class="headline-md"`, `class="label-xs"`…
+const utilities: Record<string, Record<string, string>> = {};
 for (const [name, t] of Object.entries<any>(fm.typography)) {
   const mono = /mono/i.test(t.fontFamily);
-  lines.push(
-    `.${name} {`,
+  utilities[name] = {
+    "font-family": `var(${mono ? "--font-mono" : "--font-serif"})`,
+    "font-size": t.fontSize,
+    "font-weight": String(t.fontWeight),
+    "line-height": String(t.lineHeight),
+    ...(t.letterSpacing != null ? { "letter-spacing": t.letterSpacing } : {}),
+  };
+  out.push(
+    `@utility ${name} {`,
     `  font-family: var(${mono ? "--font-mono" : "--font-serif"});`,
-    `  font-size: var(--type-${name}-size);`,
-    `  font-weight: var(--type-${name}-weight);`,
-    `  line-height: var(--type-${name}-lh);`,
-    ...(t.letterSpacing != null ? [`  letter-spacing: var(--type-${name}-ls);`] : []),
+    `  font-size: ${t.fontSize};`,
+    `  font-weight: ${t.fontWeight};`,
+    `  line-height: ${t.lineHeight};`,
+    ...(t.letterSpacing != null ? [`  letter-spacing: ${t.letterSpacing};`] : []),
     "}",
     "",
   );
 }
 
-const out = new URL("../site/tokens.css", import.meta.url);
-await Bun.write(out, lines.join("\n"));
-
-// Bidirectional check: every var(--x) the site consumes must have been emitted.
-const consumers = ["../site/styles.css", "../site/index.html", "../site/main.js"];
-const missing = new Set<string>();
-for (const rel of consumers) {
-  const text = await Bun.file(new URL(rel, import.meta.url)).text();
-  for (const m of text.matchAll(/var\((--[a-z0-9-]+)[),]/g)) {
-    if (!emitted.has(m[1])) missing.add(`${m[1]} (${rel.replace("../", "")})`);
+const base = `@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    color-scheme: light;
+  }
+  html.dark {
+    color-scheme: dark;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    transition: background-color var(--motion-theme) ease, color var(--motion-theme) ease;
+  }
+  ::selection {
+    background: var(--foreground);
+    color: var(--background);
+  }
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: ${r.sm};
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--muted-foreground);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
-if (missing.size) {
-  throw new Error(`Site references variables that tokens.css does not emit:\n  ${[...missing].join("\n  ")}`);
-}
+`;
+out.push(base);
 
-console.log(`tokens.css written: ${Object.keys(fm.colors).length} colors (+dark), ` +
-  `${Object.keys(fm.typography).length} type levels, ${Object.keys(fm.spacing).length} spacing steps; ` +
-  `${emitted.size} variables verified against site usage`);
+const css = out.join("\n");
+await Bun.write(new URL("../registry/styles/paperlamp.css", import.meta.url), css);
+await Bun.write(
+  new URL("../registry/styles/tokens.json", import.meta.url),
+  JSON.stringify(
+    { theme, light: { ...root, ...light }, dark, utilities, radiusSm: r.sm, entrance: theme["animate-fade-up"] },
+    null,
+    2,
+  ) + "\n",
+);
+
+console.log(
+  `paperlamp.css written: ${Object.keys(light).length} semantic colors (+dark), ` +
+    `${Object.keys(fm.typography).length} type utilities, ${Object.keys(fm.shadow).length} shadows.`,
+);

@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>纸灯 · Paperlamp</title>
+  <meta name="description" content="纸灯 / Paperlamp — 文本先行、以留白与边框建立秩序的 Vue 组件库。">
+  <!-- favicon 颜色复制自 colors.primary / colors.neutral（favicon 无法消费 CSS 变量） -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='4' fill='%232C2C2C'/%3E%3Ccircle cx='8' cy='8' r='3' fill='%23F7F7F8'/%3E%3C/svg%3E">
+  <script>
+    // 在首帧前应用主题，避免闪烁；校验规则与 useTheme() 一致。
+    (function () {
+      var v = null;
+      try { v = localStorage.getItem("paperlamp-theme"); } catch (e) {}
+      var pref = v === "light" || v === "dark" ? v : "auto";
+      var dark = pref === "dark" ||
+        (pref === "auto" && matchMedia("(prefers-color-scheme: dark)").matches);
+      document.documentElement.classList.toggle("dark", dark);
+    })();
+  </script>
+</head>
+<body>
+  <div id="app"></div>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

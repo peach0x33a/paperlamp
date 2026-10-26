@@ -1,0 +1,26 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "lxgw-wenkai-screen-webfont/lxgwwenkaiscreen.css";
+@import "@fontsource/fira-code/400.css";
+@import "@fontsource/fira-code/500.css";
+@import "@fontsource/fira-code/700.css";
+@import "../../registry/styles/paperlamp.css";
+
+/* The component library lives outside the Vite root. */
+@source "../../registry";
+
+/* ---- Docs-only styles (not part of the registry) ---- */
+
+/* Shiki dual-theme output: colors come from --shiki-light / --shiki-dark. */
+.shiki,
+.shiki span {
+  color: var(--shiki-light);
+  background-color: transparent !important;
+}
+.dark .shiki,
+.dark .shiki span {
+  color: var(--shiki-dark);
+}
+.shiki code {
+  counter-reset: line;
+}

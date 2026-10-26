@@ -1,6 +1,6 @@
 ---
 version: alpha
-name: 素墨 / Quiet Ink
+name: 纸灯 / Paperlamp
 description: >-
   A quiet, text-forward visual system for a Chinese-language Nuxt showcase of
   AI-assisted tools — soft ink typography on paper-like surfaces, an indigo
@@ -23,6 +23,7 @@ colors:
   rating: "#FACC15"
   featured: "#92400E"
   featured-wash: "#FFFBEB"
+  featured-border: "#F59E0B"
   warning: "#EA580C"
   warning-bar: "#FB923C"
   warning-text: "#9A3412"
@@ -44,6 +45,7 @@ colors-dark:
   rating: "#FACC15"
   featured: "#FDE68A"
   featured-wash: "rgba(69, 26, 3, 0.3)"
+  featured-border: "#FBBF24"
   warning: "#FB923C"
   warning-bar: "#FB923C"
   warning-text: "#FED7AA"
@@ -174,6 +176,9 @@ components:
     typography: "{typography.label-xs}"
     rounded: "{rounded.sm}"
     padding: "0.125rem {spacing.2}"
+  badge-featured-hairline:
+    backgroundColor: "{colors.featured-border}"
+    height: "1px"
   rating-star:
     textColor: "{colors.rating}"
     size: "0.75rem"
@@ -237,11 +242,11 @@ components:
     typography: "{typography.label-sm}"
 ---
 
-# 素墨 · Quiet Ink
+# 纸灯 · Paperlamp
 
 ## Overview
 
-素墨 (Quiet Ink) is the visual language of the 幻觉产物 / AI Toybox showcase —
+纸灯 (Paperlamp) is the visual language of the 幻觉产物 / AI Toybox showcase —
 a calm, slightly playful exhibition space for AI-made tools: a well-kept
 reading notebook hung with the hush of a gallery, never a glossy startup
 dashboard. The interface is text-forward and lightweight: generous
@@ -298,8 +303,8 @@ already encodes meaning:
   always beside a mono numeric score, because the gold alone measures only
   1.53:1 on white and cannot carry meaning by itself.
 - **Amber** marks featured/pinned content: {colors.featured} is the badge
-  ink, {colors.featured-wash} its ground, with an amber-500 `#F59E0B`
-  hairline (dark: `#FBBF24`). The fixed database notice banner runs its own
+  ink, {colors.featured-wash} its ground, with an amber-500
+  {colors.featured-border} hairline (dark: {colors-dark.featured-border}). The fixed database notice banner runs its own
   amber recipe — amber-50 ground, amber-300 `#FCD34D` border, amber-900
   `#78350F` ink, amber-700 dismiss — unchanged in dark mode.
 - **Orange** owns safety: content-warning banners pair the
